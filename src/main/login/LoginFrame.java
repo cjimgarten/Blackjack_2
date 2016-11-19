@@ -1,8 +1,8 @@
 /*
- * LoginOrRegister.java
+ * LoginFrame.java
  * 
  * created: 10-01-2016
- * modified: 11-13-2016
+ * modified: 11-16-2016
  * 
  * existing user login and new user registration frame
  */
@@ -23,7 +23,7 @@ import java.sql.Connection;
 import main.login.panels.LoginPanel;
 import main.login.panels.RegisterPanel;
 
-public class LoginOrRegister extends JFrame {
+public class LoginFrame extends JFrame {
 	
 	// SQL connection
 	private Connection conn;
@@ -35,7 +35,7 @@ public class LoginOrRegister extends JFrame {
 	/**
 	 * create the frame
 	 */
-	public LoginOrRegister(Connection conn) {
+	public LoginFrame(Connection conn) {
 		super("Login or Register");
 		this.conn = conn;
 		this.configureFrame();
