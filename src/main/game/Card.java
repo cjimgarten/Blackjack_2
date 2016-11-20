@@ -1,0 +1,130 @@
+/*
+ * Card.java
+ * 
+ * created: 11-02-2016
+ * modified: 11-14-2016
+ * 
+ * class represents a playing card
+ */
+
+package main.game;
+
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+public class Card {
+	
+	// add some attributes
+	private final String rank;
+	private final String suit;
+	private int value;
+	private boolean visible;
+	private ImageIcon upImageIcon;
+	private ImageIcon downImageIcon;
+	private JLabel upImageLabel;
+	private JLabel downImageLabel;
+	
+	/**
+	 * create a card
+	 */
+	public Card(String rank, String suit, int value, boolean visible, String imagePath, int imgWidth, int imgHeight) {
+		this.rank = rank;
+		this.suit = suit;
+		this.value = value;
+		this.visible = visible;
+		this.upImageIcon = new ImageIcon(getClass().getResource(imagePath));
+		this.downImageIcon = new ImageIcon(getClass().getResource("../png/card_back_black.png"));
+		this.resizeImageIcons(imgWidth, imgHeight); // resize card ImageIcons
+		this.upImageLabel = new JLabel(this.upImageIcon);
+		this.downImageLabel = new JLabel(this.downImageIcon);
+	}
+	
+	/**
+	 * resize the image icons for this card
+	 */
+	private void resizeImageIcons(int width, int height) {
+		Image image = this.upImageIcon.getImage();
+		image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		this.upImageIcon = new ImageIcon(image);
+		
+		image = this.downImageIcon.getImage();
+		image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		this.downImageIcon = new ImageIcon(image);
+	}
+	
+	/**
+	 * add some get methods
+	 */
+	public String getRank() {
+		if (this.visible) {
+			return this.rank;
+		}
+		return "_";
+	}
+	
+	public String getSuit() {
+		if (this.visible) {
+			return this.suit;
+		}
+		return "_";
+	}
+	
+	public int getValue() {
+		if (this.visible) {
+			return this.value;
+		}
+		return 0;
+	}
+	
+	public boolean getVisibility() {
+		return this.visible;
+	}
+	
+	public ImageIcon getImageIcon() {
+		if (this.visible) {
+			return this.upImageIcon;
+		}
+		return this.downImageIcon;
+	}
+	
+	public JLabel getImageLabel() {
+		if (this.visible) {
+			return this.upImageLabel;
+		}
+		return this.downImageLabel;
+	}
+	
+	/**
+	 * swap the value of an Ace from 11 to 1 or vice versa
+	 */
+	public void swapAceValue() {
+		if (!(this.rank.equals("Ace"))) {
+			return;
+		}
+		if (this.value == 11) {
+			this.value = 1;
+		} else {
+			this.value = 11;
+		}
+	}
+	
+	/**
+	 * flip the card
+	 */
+	public void swapVisibility() {
+		if (this.visible) {
+			this.visible = false;
+		} else {
+			this.visible = true;
+		}
+	}
+	
+	/**
+	 * return data about this instance
+	 */
+	public String toString() {
+		return this.rank + " of " + this.suit + "s: " + this.value;
+	}
+
+}
