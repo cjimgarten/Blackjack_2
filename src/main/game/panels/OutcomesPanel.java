@@ -55,17 +55,17 @@ public class OutcomesPanel extends JPanel {
 		}
 		
 		// store the ResultSet in a two-dimensional Object array
-		String[] columnNames = {"Entry #", "Date", "Outcome", "Previous Balance", "Wager", "Current Balance"};
+		String[] columnNames = {"Entry #", "Date", "Outcome", "Wager", "Previous Balance", "Current Balance"};
 		Object[][] data = new Object[rows][6];
 		try {
 			rs.beforeFirst(); // move cursor back to beginning
 			for (int i = 0; rs.next(); i++) {
 				String date = rs.getString("date");
 				String outcome = rs.getString("outcome");
-				String prev_bal = rs.getString("prev_bal");
 				String wager = rs.getString("wager");
+				String prev_bal = rs.getString("prev_bal");
 				String cur_bal = rs.getString("cur_bal");
-				Object[] arr = {new Integer(i+1), date, outcome, prev_bal, wager, cur_bal};
+				Object[] arr = {new Integer(i+1), date, outcome, wager, prev_bal, cur_bal};
 				data[i] = arr;
 			}
 		} catch (SQLException e) {
@@ -87,7 +87,7 @@ public class OutcomesPanel extends JPanel {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT date, outcome, prev_bal, wager, cur_bal FROM outcomes WHERE user_id = " + id;
+			String query = "SELECT date, wager, outcome, prev_bal, cur_bal FROM outcomes WHERE user_id = " + id;
 			stmt = this.conn.createStatement();
 			rs = stmt.executeQuery(query);
 		} catch (Exception e) {

@@ -41,7 +41,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	private Connection conn;
 	
 	// users' id, username and cash balance
-	private String id, username, cash;
+	private String id, username, balance;
 	
 	// GUI components
 	private JPanel contentPane;
@@ -65,7 +65,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.username = MainApp.username;
 		try {
 			this.id = this.getUserData("id");
-			this.cash = this.getUserData("cash");
+			this.balance = this.getUserData("balance");
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -121,7 +121,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.outcomesPanel = new OutcomesPanel(this.conn, this.id);
 		
 		// create a blackjack tab
-		this.blackjackPanel = new BlackjackPanel(this.conn, this.id, this.cash, this.outcomesPanel);
+		this.blackjackPanel = new BlackjackPanel(this.conn, this.id, this.balance, this.outcomesPanel);
 
 		// create a transactions tab
 		this.transactionsPanel = new TransactionsPanel(this.conn, this.id);
@@ -200,32 +200,32 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		try {
 			// make sure cash variable is up to date
 			stmt = this.conn.createStatement();
-			String query = "SELECT cash FROM users WHERE id = " + this.id;
+			String query = "SELECT balance FROM users WHERE id = " + this.id;
 			ResultSet rs = stmt.executeQuery(query); // execute query statement
 			while (rs.next()) {
-				this.cash = rs.getString("cash");
+				this.balance = rs.getString("balance");
 			}
 			
 			// update cash variable
-			double currentCash = Double.parseDouble(this.cash);
-			double previousCash = currentCash;
+			double currentBalance = Double.parseDouble(this.balance);
+			double previousBalance = currentBalance;
 			if (action.equals("deposit")) {
-				currentCash += amount;
+				currentBalance += amount;
 			} else if (action.equals("withdrawal")) {
-				currentCash -= amount;
+				currentBalance -= amount;
 			}
-			this.cash = currentCash + "";
+			this.balance = currentBalance + "";
 			
 			// update database
-			String update = "UPDATE users SET cash = " + this.cash + "WHERE id = " + this.id;
+			String update = "UPDATE users SET balance = " + this.balance + "WHERE id = " + this.id;
 			int updateResult = stmt.executeUpdate(update); // execute update statement
 			String insert = "INSERT INTO transactions (user_id, date, time, transaction, prev_bal, amount, cur_bal, time_stamp)"
-					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + action + "', " + previousCash + ", " + amount + ", " 
-					+ this.cash + ", CURTIME())";
+					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + action + "', " + previousBalance + ", " + amount + ", " 
+					+ this.balance + ", CURTIME())";
 			int insertResult = stmt.executeUpdate(insert); // execute insert statement
 			rs = stmt.executeQuery(query); // execute query statement
 			while (rs.next()) {
-				this.cash = rs.getString("cash");
+				this.balance = rs.getString("balance");
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -268,7 +268,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	 * keep panels updated
 	 */
 	public void update() {
-		this.blackjackPanel.updateBalance(this.cash);
+		this.blackjackPanel.updateBalance(this.balance);
 		this.transactionsPanel.update(this.id);
 	}
 }

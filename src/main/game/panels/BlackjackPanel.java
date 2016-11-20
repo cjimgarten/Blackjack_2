@@ -35,8 +35,8 @@ import main.game.Player;
 
 public class BlackjackPanel extends JPanel implements ActionListener {
 	
-	// keep track of the users' id
-	private String id, cash;
+	// keep track of the users' id and cash balance
+	private String id, balance;
 
 	// SQL connection
 	private Connection conn;
@@ -44,7 +44,7 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 	// GUI components
 	private JPanel centerPane, southPane;
 	private JButton hitBtn, stayBtn, dealBtn;
-	private JLabel cashLabel, wagerLabel, userValueLabel, dealerValueLabel;
+	private JLabel balanceLabel, wagerLabel, userValueLabel, dealerValueLabel;
 	private OutcomesPanel outcomesPanel;
 	
 	// blackjack object
@@ -64,20 +64,20 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 	/**
 	 * create the panel
 	 */
-	public BlackjackPanel(Connection conn, String id, String cash, OutcomesPanel outcomesPanel) {
+	public BlackjackPanel(Connection conn, String id, String balance, OutcomesPanel outcomesPanel) {
 		super();
 		this.setLayout(new BorderLayout());
 		this.conn = conn;
 		this.id = id;
-		this.cash = cash;
+		this.balance = balance;
 		this.outcomesPanel = outcomesPanel;
-		this.configurePanel(id, cash);
+		this.configurePanel(id, balance);
 	}
 	
 	/**
 	 * configure panel components
 	 */
-	private void configurePanel(String id, String cash) {
+	private void configurePanel(String id, String balance) {
 		// add JPanels to the center and bottom of the content pane
 		int green = 100;
 		this.centerPane = new JPanel();
@@ -103,12 +103,12 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 		green = 220;
 		Color fgColor = new Color(0, green, 0);
 		LineBorder labelBorder = new LineBorder(new Color(0, green, 0), 1);
-		this.cashLabel = new JLabel("", JLabel.CENTER);
-		this.updateBalance(this.cash);
-		this.cashLabel.setBounds(10, 10, 200, 25);
-		this.cashLabel.setBorder(labelBorder);
-		this.cashLabel.setForeground(fgColor);
-		this.centerPane.add(this.cashLabel);
+		this.balanceLabel = new JLabel("", JLabel.CENTER);
+		this.updateBalance(this.balance);
+		this.balanceLabel.setBounds(10, 10, 200, 25);
+		this.balanceLabel.setBorder(labelBorder);
+		this.balanceLabel.setForeground(fgColor);
+		this.centerPane.add(this.balanceLabel);
 		
 		// configure a label to show the users' wager
 		this.wagerLabel = new JLabel("", JLabel.CENTER);
@@ -353,8 +353,8 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 	/**
 	 * update cash balance on GUI
 	 */
-	public void updateBalance(String cash) {	
-		this.cashLabel.setText("Balance: $" + cash);
+	public void updateBalance(String balance) {	
+		this.balanceLabel.setText("Balance: $" + balance);
 	}
 	
 	/**
@@ -399,32 +399,32 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 		try {
 			// make sure cash variable is up to date
 			stmt = this.conn.createStatement();
-			String query = "SELECT cash FROM users WHERE id = " + this.id;
+			String query = "SELECT balance FROM users WHERE id = " + this.id;
 			ResultSet rs = stmt.executeQuery(query); // execute query statement
 			while (rs.next()) {
-				this.cash = rs.getString("cash");
+				this.balance = rs.getString("balance");
 			}
 			
 			// update cash variable
-			double currentCash = Double.parseDouble(this.cash);
-			double previousCash = currentCash;
+			double currentBalance = Double.parseDouble(this.balance);
+			double previousBalance = currentBalance;
 			if (outcome.equals("winner")) {
-				currentCash += this.wager;
+				currentBalance += this.wager;
 			} else if (outcome.equals("loser")) {
-				currentCash -= this.wager;
+				currentBalance -= this.wager;
 			}
-			this.cash = currentCash + "";
+			this.balance = currentBalance + "";
 			
 			// update database
-			String update = "UPDATE users SET cash = " + this.cash + "WHERE id = " + this.id;
+			String update = "UPDATE users SET balance = " + this.balance + "WHERE id = " + this.id;
 			int updateResult = stmt.executeUpdate(update); // execute update statement
 			String insert = "INSERT INTO outcomes (user_id, date, time, outcome, prev_bal, wager, cur_bal, time_stamp)"
-					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + outcome + "', " + previousCash + ", " + this.wager + ", "
-					+ this.cash + ", CURTIME())";
+					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + outcome + "', " + previousBalance + ", " + this.wager + ", "
+					+ this.balance + ", CURTIME())";
 			int insertResult = stmt.executeUpdate(insert); // execute insert statement
 			rs = stmt.executeQuery(query); // execute query statement
 			while (rs.next()) {
-				this.cash = rs.getString("cash");
+				this.balance = rs.getString("balance");
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -439,6 +439,6 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 				}
 			}
 		}
-		this.updateBalance(this.cash);
+		this.updateBalance(this.balance);
 	}
 }

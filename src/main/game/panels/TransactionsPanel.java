@@ -55,17 +55,17 @@ public class TransactionsPanel extends JPanel {
 		}
 		
 		// store the ResultSet in a two-dimensional Object array
-		String[] columnNames = {"Entry #", "Date", "Transaction", "Previous Balance", "Amount", "Current Balance"};
+		String[] columnNames = {"Entry #", "Date", "Transaction", "Amount", "Previous Balance", "Current Balance"};
 		Object[][] data = new Object[rows][6];
 		try {
 			rs.beforeFirst(); // move cursor back to beginning
 			for (int i = 0; rs.next(); i++) {
 				String date = rs.getString("date");
 				String transaction = rs.getString("transaction");
-				String prev_bal = rs.getString("prev_bal");
 				String amount = rs.getString("amount");
+				String prev_bal = rs.getString("prev_bal");
 				String cur_bal = rs.getString("cur_bal");
-				Object[] arr = {new Integer(i+1), date, transaction, prev_bal, amount, cur_bal};
+				Object[] arr = {new Integer(i+1), date, transaction, amount, prev_bal, cur_bal};
 				data[i] = arr;
 			}
 		} catch (SQLException e) {
@@ -87,7 +87,7 @@ public class TransactionsPanel extends JPanel {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT date, transaction, prev_bal, amount, cur_bal FROM transactions WHERE user_id = " + id;
+			String query = "SELECT date, amount, transaction, prev_bal, cur_bal FROM transactions WHERE user_id = " + id;
 			stmt = this.conn.createStatement();
 			rs = stmt.executeQuery(query);
 		} catch (Exception e) {

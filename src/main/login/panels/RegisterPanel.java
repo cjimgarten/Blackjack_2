@@ -142,7 +142,7 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 			String hash = this.hashPassword(password);
 
 			// insert username, hex string, and cash money into table
-			String insert = "INSERT INTO users (username, hash, cash, time_stamp) VALUES " +
+			String insert = "INSERT INTO users (username, hash, balance, time_stamp) VALUES " +
 			 "('" + username + "', '" + hash + "', " + initialDeposit + ", CURTIME())";
 			int result = stmt.executeUpdate(insert);
 			if (result == 1) {
@@ -154,8 +154,8 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 			rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				int id = rs.getInt("id");
-				insert = "INSERT INTO transactions (user_id, date, time, time_stamp, transaction, amount, balance) VALUES "
-						+ "(" + id + ", CURDATE(), CURTIME(), CURTIME(), 'deposit', " + initialDeposit + ", " + initialDeposit + ")";
+				insert = "INSERT INTO transactions (user_id, date, time, amount, transaction, prev_bal, cur_bal, time_stamp) VALUES "
+						+ "(" + id + ", CURDATE(), CURTIME(), " + initialDeposit + ", 'deposit', 0.00, " + initialDeposit + ", CURTIME())";
 				result = stmt.executeUpdate(insert);
 			}
 		} catch(Exception e) {
