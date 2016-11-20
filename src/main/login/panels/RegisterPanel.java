@@ -2,7 +2,7 @@
  * RegisterPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-13-2016
+ * modified: 11-20-2016
  * 
  * panel for user to register a new account
  */
@@ -92,13 +92,12 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 		// insert new user into database
 		try {
 			int registered = this.insertNewUser(username, password);
-			if (registered == 2) {
-				JOptionPane.showMessageDialog(this, "You are now registered!");
+			if (registered == 2) { // successful registration attempt
 				Demo.loggedIn = true; // for main.login.Demo
 				Demo.username = username;
 				MainApp.loggedIn = true; // for main.Main
 				MainApp.username = username;
-			} else if (registered == 1) {
+			} else if (registered == 1) { // unsuccessful registration attempt
 				JOptionPane.showMessageDialog(this, "Username is taken, please pick another");
 			} else {
 				JOptionPane.showMessageDialog(this, "Something went wrong");
@@ -143,7 +142,8 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 			String hash = this.hashPassword(password);
 
 			// insert username, hex string, and cash money into table
-			String insert = "INSERT INTO users (username, hash, cash) VALUES ('" + username + "', '" + hash + "', " + initialDeposit + ")";
+			String insert = "INSERT INTO users (username, hash, cash, time_stamp) VALUES " +
+			 "('" + username + "', '" + hash + "', " + initialDeposit + ", CURTIME())";
 			int result = stmt.executeUpdate(insert);
 			if (result == 1) {
 				registered = 2;
@@ -155,7 +155,7 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 			if (rs.next()) {
 				int id = rs.getInt("id");
 				insert = "INSERT INTO transactions (user_id, date, time, time_stamp, transaction, amount, balance) VALUES "
-						+ "(" + id + ", CURDATE(),CURTIME(), CURTIME(), 'deposit', " + initialDeposit + ", " + initialDeposit + ")";
+						+ "(" + id + ", CURDATE(), CURTIME(), CURTIME(), 'deposit', " + initialDeposit + ", " + initialDeposit + ")";
 				result = stmt.executeUpdate(insert);
 			}
 		} catch(Exception e) {

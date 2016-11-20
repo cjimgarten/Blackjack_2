@@ -2,7 +2,7 @@
  * LoginPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-13-2016
+ * modified: 11-20-2016
  * 
  * panel for user to login to an existing account
  */
@@ -70,13 +70,12 @@ public class LoginPanel extends BasePanel implements ActionListener {
 		
 		// attempt to log the user in
 		try {
-			if (this.validateUser(username, password)) {
-				JOptionPane.showMessageDialog(this, "You are now logged in!");
+			if (this.validateUser(username, password)) { // successful login attempt
 				Demo.loggedIn = true; // for main.login.Demo
 				Demo.username = username;
 				MainApp.loggedIn = true; // for main.Main
 				MainApp.username = username;
-			} else {
+			} else { // unsuccessful login attempt
 				JOptionPane.showMessageDialog(this, "Incorrect credentials");
 			}
 		} catch (SQLException e) {
