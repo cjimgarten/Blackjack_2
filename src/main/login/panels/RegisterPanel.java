@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import main.MainApp;
-import main.login.Demo;
+import main.login.demos.Demo;
 
 public class RegisterPanel extends BasePanel implements ActionListener {
 

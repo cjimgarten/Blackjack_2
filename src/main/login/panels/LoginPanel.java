@@ -19,7 +19,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 import main.MainApp;
-import main.login.Demo;
+import main.login.demos.Demo;
 
 public class LoginPanel extends BasePanel implements ActionListener {
 		

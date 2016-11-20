@@ -2,12 +2,12 @@
  * LoginFrame.java
  * 
  * created: 10-01-2016
- * modified: 11-16-2016
+ * modified: 11-20-2016
  * 
  * existing user login and new user registration frame
  */
 
-package main.login;
+package main.login.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -53,7 +53,7 @@ public class LoginFrame extends JFrame {
 		this.setContentPane(this.contentPane);
 		
 		// set the icon image for this frame
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("../png/jack_of_spades2.png"));
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource("../../png/jack_of_spades2.png"));
 		Image image = imageIcon.getImage();
 		this.setIconImage(image);
 		
