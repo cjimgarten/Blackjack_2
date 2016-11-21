@@ -154,8 +154,8 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 			rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				int id = rs.getInt("id");
-				insert = "INSERT INTO transactions (user_id, date, time, amount, transaction, prev_bal, cur_bal, time_stamp) VALUES "
-						+ "(" + id + ", CURDATE(), CURTIME(), " + initialDeposit + ", 'deposit', 0.00, " + initialDeposit + ", CURTIME())";
+				insert = "INSERT INTO transactions (user_id, date, time, transaction, amount, old_bal, new_bal, time_stamp) VALUES "
+						+ "(" + id + ", CURDATE(), CURTIME(), 'deposit', " + initialDeposit + ", 0.00, " + initialDeposit + ", CURTIME())";
 				result = stmt.executeUpdate(insert);
 			}
 		} catch(Exception e) {

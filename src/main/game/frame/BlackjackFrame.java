@@ -207,20 +207,20 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			}
 			
 			// update cash variable
-			double currentBalance = Double.parseDouble(this.balance);
-			double previousBalance = currentBalance;
+			double newBalance = Double.parseDouble(this.balance);
+			double oldBalance = newBalance;
 			if (action.equals("deposit")) {
-				currentBalance += amount;
+				newBalance += amount;
 			} else if (action.equals("withdrawal")) {
-				currentBalance -= amount;
+				newBalance -= amount;
 			}
-			this.balance = currentBalance + "";
+			this.balance = newBalance + "";
 			
 			// update database
 			String update = "UPDATE users SET balance = " + this.balance + "WHERE id = " + this.id;
 			int updateResult = stmt.executeUpdate(update); // execute update statement
-			String insert = "INSERT INTO transactions (user_id, date, time, transaction, prev_bal, amount, cur_bal, time_stamp)"
-					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + action + "', " + previousBalance + ", " + amount + ", " 
+			String insert = "INSERT INTO transactions (user_id, date, time, transaction, amount, old_bal, new_bal, time_stamp)"
+					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + action + "', " + amount + ", " + oldBalance + ", " 
 					+ this.balance + ", CURTIME())";
 			int insertResult = stmt.executeUpdate(insert); // execute insert statement
 			rs = stmt.executeQuery(query); // execute query statement

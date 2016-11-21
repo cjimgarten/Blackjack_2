@@ -81,6 +81,7 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 		// add JPanels to the center and bottom of the content pane
 		int green = 100;
 		this.centerPane = new JPanel();
+		this.centerPane.setBorder(new LineBorder(new Color(150,150,150), 5));
 		this.centerPane.setLayout(null);
 		this.centerPane.setBackground(new Color(0, green, 0));
 		this.add(this.centerPane, BorderLayout.CENTER);
@@ -100,33 +101,42 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 		this.southPane.add(this.dealBtn);
 		
 		// configure a label to show users' cash balance
+		int x = 15;
+		int y = 15;
+		int width = 200;
+		int height = 25;
 		green = 220;
 		Color fgColor = new Color(0, green, 0);
 		LineBorder labelBorder = new LineBorder(new Color(0, green, 0), 1);
 		this.balanceLabel = new JLabel("", JLabel.CENTER);
 		this.updateBalance(this.balance);
-		this.balanceLabel.setBounds(10, 10, 200, 25);
+		this.balanceLabel.setBounds(x, y, width, height);
 		this.balanceLabel.setBorder(labelBorder);
 		this.balanceLabel.setForeground(fgColor);
 		this.centerPane.add(this.balanceLabel);
 		
 		// configure a label to show the users' wager
+		y = 45;
 		this.wagerLabel = new JLabel("", JLabel.CENTER);
 		this.updateWager();
-		this.wagerLabel.setBounds(10, 40, 200, 25);
+		this.wagerLabel.setBounds(x, y, width, height);
 		this.wagerLabel.setBorder(labelBorder);
 		this.wagerLabel.setForeground(fgColor);
 		this.centerPane.add(this.wagerLabel);
 		
 		// configure some labels to display hand values
+		int sideLength = 35;
+		y = 290;
 		this.userValueLabel = new JLabel("", JLabel.CENTER);
-		this.userValueLabel.setBounds(10, 275, 35, 35);
+		this.userValueLabel.setBounds(x, y, sideLength, sideLength);
 		this.userValueLabel.setBorder(new LineBorder(new Color(0, green, 0), 1));
 		this.userValueLabel.setForeground(new Color(0, green, 0));
 		this.centerPane.add(this.userValueLabel);
 		
+		x = 725;
+		y = 150;
 		this.dealerValueLabel = new JLabel("", JLabel.CENTER);
-		this.dealerValueLabel.setBounds(700, 150, 35, 35);
+		this.dealerValueLabel.setBounds(x, y, sideLength, sideLength);
 		this.dealerValueLabel.setBorder(new LineBorder(new Color(0, green, 0), 1));
 		this.dealerValueLabel.setForeground(new Color(0, green, 0));
 		this.centerPane.add(this.dealerValueLabel);
@@ -149,10 +159,10 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 		this.updateWager();
 		this.game.shuffleDeck();
 		this.game.deal();
-		this.userCardPos[0] = 25; /* x */
-		this.userCardPos[1] = 350; /* y */
-		this.dealerCardPos[0] = 670; /* x */
-		this.dealerCardPos[1] = 25; /* y */
+		this.userCardPos[0] = 15; /* x */
+		this.userCardPos[1] = 360; /* y */
+		this.dealerCardPos[0] = 685; /* x */
+		this.dealerCardPos[1] = 15; /* y */
 		this.enableButtons();
 		this.dealCards();
 	}
@@ -406,20 +416,20 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 			}
 			
 			// update cash variable
-			double currentBalance = Double.parseDouble(this.balance);
-			double previousBalance = currentBalance;
+			double newBalance = Double.parseDouble(this.balance);
+			double oldBalance = newBalance;
 			if (outcome.equals("winner")) {
-				currentBalance += this.wager;
+				newBalance += this.wager;
 			} else if (outcome.equals("loser")) {
-				currentBalance -= this.wager;
+				newBalance -= this.wager;
 			}
-			this.balance = currentBalance + "";
+			this.balance = newBalance + "";
 			
 			// update database
 			String update = "UPDATE users SET balance = " + this.balance + "WHERE id = " + this.id;
 			int updateResult = stmt.executeUpdate(update); // execute update statement
-			String insert = "INSERT INTO outcomes (user_id, date, time, outcome, prev_bal, wager, cur_bal, time_stamp)"
-					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + outcome + "', " + previousBalance + ", " + this.wager + ", "
+			String insert = "INSERT INTO outcomes (user_id, date, time, outcome, wager, old_bal, new_bal, time_stamp)"
+					+ " VALUES (" + this.id + ", CURDATE(), CURTIME(), '" + outcome + "', " + this.wager + ", " + oldBalance + ", "
 					+ this.balance + ", CURTIME())";
 			int insertResult = stmt.executeUpdate(insert); // execute insert statement
 			rs = stmt.executeQuery(query); // execute query statement
