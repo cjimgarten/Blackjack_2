@@ -10,7 +10,7 @@ Create a new account:
 Play a hand of blackjack:
 ![Alt text](./src/screenshots/blackjack.png?raw=true "Blackjack")
 
-View deposits and withdrawals:
+View deposit and withdrawal history:
 ![Alt text](./src/screenshots/transactions.png?raw=true "Transactions")
 
 View previous wins and losses:
