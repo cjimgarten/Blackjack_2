@@ -2,7 +2,7 @@
  * RegisterPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-22-2016
+ * modified: 11-23-2016
  * 
  * panel for user to register a new account
  */
@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import main.MainApp;
-import main.MainApp1;
 
 public class RegisterPanel extends BasePanel implements ActionListener {
 
@@ -94,10 +93,8 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 		try {
 			int registered = this.insertNewUser(username, password);
 			if (registered == 2) { // successful registration attempt
-				MainApp.loggedIn = true; // for main.MainApp
-				MainApp.username = username;
-				MainApp1.loggedIn = true; // for main.MainApp1
-				MainApp1.username = username;
+				MainApp.loggedIn = true; // log the user in
+				MainApp.username = username; // store their username
 			} else if (registered == 1) { // unsuccessful registration attempt
 				JOptionPane.showMessageDialog(this, "Username is taken, please pick another");
 			} else {

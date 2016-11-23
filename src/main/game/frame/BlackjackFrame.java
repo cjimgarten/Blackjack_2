@@ -31,7 +31,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import main.MainApp;
-import main.MainApp1;
 import main.game.panels.BlackjackPanel;
 import main.game.panels.TransactionsPanel;
 import main.game.panels.OutcomesPanel;
@@ -60,6 +59,20 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	/**
 	 * create the frame
 	 */
+	public BlackjackFrame(Connection conn, String title, Image logo, String username) {
+		super(title + " (" + username + ")");
+		this.conn = conn;
+		this.setIconImage(logo);
+		this.username = username;
+		try {
+			this.id = this.getUserData("id");
+			this.balance = this.getUserData("balance");
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		this.configureFrame();
+	}
+	
 	public BlackjackFrame(Connection conn, String title, String username) {
 		super(title + " (" + username + ")");
 		this.conn = conn;
@@ -107,11 +120,6 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.contentPane.setBackground(new Color(200, 200, 200));
 		this.setContentPane(this.contentPane);
-		
-		// set the icon image for this frame
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("../../png/jack_of_spades2.png"));
-		Image image = imageIcon.getImage();
-		this.setIconImage(image);
 		
 		// add a menu bar
 		this.menuBar = new JMenuBar();
@@ -179,7 +187,6 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			}
 		} else { // change the users' login status
 			MainApp.loggedIn = false;
-			MainApp1.loggedIn = false;
 		}
 	}
 	

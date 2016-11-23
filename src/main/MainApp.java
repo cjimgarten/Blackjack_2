@@ -9,10 +9,13 @@
 
 package main;
 
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -25,6 +28,11 @@ public class MainApp {
 	public static boolean loggedIn = false;
 	public static String username = "";
 	
+	// DB credentials
+	private final String dbms_username = ""; /* dbms_username */
+	private final String dbms_password = ""; /* dbms_password */
+	private final String db_name = ""; /* db_name */
+	
 	// SQL connection
 	private Connection conn;
 	
@@ -34,6 +42,9 @@ public class MainApp {
 	
 	// title of the application
 	private String applicationTitle;
+	
+	// application logo
+	private Image logo;
 	
 	/**
 	 * launch the application
@@ -48,22 +59,26 @@ public class MainApp {
 	public MainApp(String title) {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
-				"", /* dbms username */
-				"", /* dbms password */
-				"" /* database name */
+				dbms_username,
+				dbms_password,
+				db_name
 			);
 		this.applicationTitle = title;
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource("png/jack_of_spades2.png"));
+		this.logo = imageIcon.getImage();
 		this.startApplication();
 	}
 	
 	public MainApp() {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
-				"", /* dbms username */
-				"", /* dbms password */
-				"" /* database name */
+				dbms_username,
+				dbms_password,
+				db_name
 			);
 		this.applicationTitle = "MainApp";
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource("png/jack_of_spades2.png"));
+		this.logo = imageIcon.getImage();
 		this.startApplication();
 	}
 	
@@ -161,7 +176,7 @@ public class MainApp {
 	 */
 	public LoginFrame invokeLoginFrame(Connection conn, String title) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		LoginFrame frame = new LoginFrame(conn, title);
+		LoginFrame frame = new LoginFrame(conn, title, this.logo);
 		frame.setVisible(true);
 		return frame;
 	}
@@ -170,7 +185,7 @@ public class MainApp {
 	 *  start blackjack
 	 */
 	public BlackjackFrame invokeBlackjackFrame(Connection conn, String title) {
-		BlackjackFrame frame = new BlackjackFrame(conn, title, MainApp.username);
+		BlackjackFrame frame = new BlackjackFrame(conn, title, this.logo, MainApp.username);
 		frame.setVisible(true);
 		return frame;
 	}

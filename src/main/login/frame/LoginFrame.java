@@ -35,6 +35,13 @@ public class LoginFrame extends JFrame {
 	/**
 	 * create the frame
 	 */
+	public LoginFrame(Connection conn, String title, Image logo) {
+		super(title);
+		this.conn = conn;
+		this.setIconImage(logo);
+		this.configureFrame();
+	}
+	
 	public LoginFrame(Connection conn, String title) {
 		super(title);
 		this.conn = conn;
@@ -57,11 +64,6 @@ public class LoginFrame extends JFrame {
 		this.contentPane.setBorder(new EmptyBorder(10,10,10,10));
 		this.contentPane.setLayout(new BorderLayout());
 		this.setContentPane(this.contentPane);
-		
-		// set the icon image for this frame
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("../../png/jack_of_spades2.png"));
-		Image image = imageIcon.getImage();
-		this.setIconImage(image);
 		
 		// create a tabbed pane
 		this.tabbedPane = new JTabbedPane();

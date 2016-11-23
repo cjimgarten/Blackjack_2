@@ -2,7 +2,7 @@
  * BlackjackPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-20-2016
+ * modified: 11-23-2016
  * 
  * panel for blackjack
  */
@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import main.MainApp;
-import main.MainApp1;
 import main.game.Blackjack;
 import main.game.Card;
 import main.game.Player;
@@ -396,9 +395,8 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 				betStr = JOptionPane.showInputDialog(this, "You must place a bet to play!\n$10 is the minimum bet!");
 			}
 			bet = Double.parseDouble(betStr);
-		} catch (Exception e) {
+		} catch (Exception e) { // if the user hits 'Cancel', log them out
 			MainApp.loggedIn = false;
-			MainApp1.loggedIn = false;
 		}
 		return bet;
 	}
