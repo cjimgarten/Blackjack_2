@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import main.MainApp;
+import main.MainApp1;
 import main.game.Blackjack;
 import main.game.Card;
 import main.game.Player;
@@ -397,6 +398,7 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 			bet = Double.parseDouble(betStr);
 		} catch (Exception e) {
 			MainApp.loggedIn = false;
+			MainApp1.loggedIn = false;
 		}
 		return bet;
 	}

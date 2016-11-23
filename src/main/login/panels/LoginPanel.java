@@ -19,7 +19,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 import main.MainApp;
-import main.login.demos.Demo;
+import main.MainApp1;
 
 public class LoginPanel extends BasePanel implements ActionListener {
 		
@@ -71,10 +71,10 @@ public class LoginPanel extends BasePanel implements ActionListener {
 		// attempt to log the user in
 		try {
 			if (this.validateUser(username, password)) { // successful login attempt
-				Demo.loggedIn = true; // for main.login.Demo
-				Demo.username = username;
-				MainApp.loggedIn = true; // for main.Main
+				MainApp.loggedIn = true; // for main.MainApp
 				MainApp.username = username;
+				MainApp1.loggedIn = true; // for main.MainApp1
+				MainApp1.username = username;
 			} else { // unsuccessful login attempt
 				JOptionPane.showMessageDialog(this, "Incorrect credentials");
 			}

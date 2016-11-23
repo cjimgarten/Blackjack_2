@@ -2,7 +2,7 @@
  * LoginFrame.java
  * 
  * created: 10-01-2016
- * modified: 11-20-2016
+ * modified: 11-23-2016
  * 
  * existing user login and new user registration frame
  */
@@ -28,15 +28,21 @@ public class LoginFrame extends JFrame {
 	// SQL connection
 	private Connection conn;
 	
-	// GUI component
+	// GUI components
 	private JPanel contentPane, loginPanel, registerPanel;
 	private JTabbedPane tabbedPane;
 	
 	/**
 	 * create the frame
 	 */
+	public LoginFrame(Connection conn, String title) {
+		super(title);
+		this.conn = conn;
+		this.configureFrame();
+	}
+	
 	public LoginFrame(Connection conn) {
-		super("Login or Register");
+		super("LoginFrame");
 		this.conn = conn;
 		this.configureFrame();
 	}

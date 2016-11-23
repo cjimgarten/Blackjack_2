@@ -2,7 +2,7 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 11-20-2016
+ * modified: 11-23-2016
  * 
  * graphical user interface for playing blackjack
  */
@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import main.MainApp;
+import main.MainApp1;
 import main.game.panels.BlackjackPanel;
 import main.game.panels.TransactionsPanel;
 import main.game.panels.OutcomesPanel;
@@ -59,10 +60,23 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	/**
 	 * create the frame
 	 */
+	public BlackjackFrame(Connection conn, String title, String username) {
+		super(title + " (" + username + ")");
+		this.conn = conn;
+		this.username = username;
+		try {
+			this.id = this.getUserData("id");
+			this.balance = this.getUserData("balance");
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		this.configureFrame();
+	}
+	
 	public BlackjackFrame(Connection conn, String username) {
 		super("Blackjack (" + username + ")");
 		this.conn = conn;
-		this.username = MainApp.username;
+		this.username = username;
 		try {
 			this.id = this.getUserData("id");
 			this.balance = this.getUserData("balance");
@@ -165,6 +179,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			}
 		} else { // change the users' login status
 			MainApp.loggedIn = false;
+			MainApp1.loggedIn = false;
 		}
 	}
 	

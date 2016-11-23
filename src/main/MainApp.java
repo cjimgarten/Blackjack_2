@@ -2,7 +2,7 @@
  * MainApp.java
  * 
  * created: 10-01-2016
- * modified: 11-20-2016
+ * modified: 11-23-2016
  * 
  * main application entry point
  */
@@ -25,18 +25,69 @@ public class MainApp {
 	public static boolean loggedIn = false;
 	public static String username = "";
 	
+	// SQL connection
+	private Connection conn;
+	
+	// GUI components
+	private LoginFrame loginFrame;
+	private BlackjackFrame blackjackFrame;
+	
+	// title of the application
+	private String applicationTitle;
+	
 	/**
-	 * application entry point
+	 * launch the application
 	 */
 	public static void main(String[] args) {
-		
+		MainApp app = new MainApp("Blackjack");
+	}
+	
+	/**
+	 * create an instance
+	 */
+	public MainApp(String title) {
 		// establish a database connection
-		Connection conn = connectToDatabase(
-			"", /* dbms username */
-			"", /* dbms password */
-			"" /* database name */
-		);
-		
+		this.conn =  this.connectToDatabase(
+				"", /* dbms username */
+				"", /* dbms password */
+				"" /* database name */
+			);
+		this.applicationTitle = title;
+		this.startApplication();
+	}
+	
+	public MainApp() {
+		// establish a database connection
+		this.conn =  this.connectToDatabase(
+				"", /* dbms username */
+				"", /* dbms password */
+				"" /* database name */
+			);
+		this.applicationTitle = "MainApp";
+		this.startApplication();
+	}
+	
+	/**
+	 * establish and return a database connection
+	 */
+	public Connection connectToDatabase(String dbms_username, String dbms_password, String db_name) {
+		Connection conn = null;
+		Properties connectionProps = new Properties();
+		connectionProps.put("user", dbms_username);
+		connectionProps.put("password", dbms_password);
+		String db_url = "jdbc:mysql://localhost:3306/" + db_name;
+		try {
+			conn = DriverManager.getConnection(db_url, connectionProps);
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return conn;
+	}
+	
+	/**
+	 * start the application
+	 */
+	public void startApplication() {
 		// ensure connection was successfully established
 		if (conn == null) {
 			System.err.println("Unable to establish database connection");
@@ -45,8 +96,10 @@ public class MainApp {
 		
 		while (true) {
 			// start application
-			LoginFrame loginFrame = MainApp.openLogin(conn);
-			
+			this.loginFrame = this.invokeLoginFrame(
+					this.conn, 
+					"Login or Register"
+				);
 			// monitor the users' login status
 			while (true) {
 				// once the user is logged in, break the loop
@@ -64,18 +117,21 @@ public class MainApp {
 			}
 			
 			// dispose of login frame once logged in
-			loginFrame.dispose();
+			this.loginFrame.dispose();
 			
 			// start blackjack
-			BlackjackFrame blackjackFrame = MainApp.openBlackjack(conn);
+			this.blackjackFrame = this.invokeBlackjackFrame(
+					this.conn, 
+					"Blackjack"
+				);
 			int option = JOptionPane.showConfirmDialog(
-					blackjackFrame,
+					this.blackjackFrame,
 					"Are you ready to play?",
 					"Welcome",
 					JOptionPane.YES_NO_OPTION
 				);
 			if (option == 0) {
-				blackjackFrame.getBlackjackPanel().startGame();
+				this.blackjackFrame.getBlackjackPanel().startGame();
 			} else {
 				MainApp.loggedIn = false;
 			}
@@ -96,33 +152,16 @@ public class MainApp {
 				}
 			}
 			
-			blackjackFrame.dispose();
+			this.blackjackFrame.dispose();
 		}
-	}
-	
-	/**
-	 * establish and return a database connection
-	 */
-	public static Connection connectToDatabase(String dbms_username, String dbms_password, String db_name) {
-		Connection conn = null;
-		Properties connectionProps = new Properties();
-		connectionProps.put("user", dbms_username);
-		connectionProps.put("password", dbms_password);
-		String db_url = "jdbc:mysql://localhost:3306/" + db_name;
-		try {
-			conn = DriverManager.getConnection(db_url, connectionProps);
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return conn;
 	}
 	
 	/**
 	 *  start a login frame
 	 */
-	public static LoginFrame openLogin(Connection conn) {
+	public LoginFrame invokeLoginFrame(Connection conn, String title) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		LoginFrame frame = new LoginFrame(conn);
+		LoginFrame frame = new LoginFrame(conn, title);
 		frame.setVisible(true);
 		return frame;
 	}
@@ -130,8 +169,8 @@ public class MainApp {
 	/**
 	 *  start blackjack
 	 */
-	public static BlackjackFrame openBlackjack(Connection conn) {
-		BlackjackFrame frame = new BlackjackFrame(conn, MainApp.username);
+	public BlackjackFrame invokeBlackjackFrame(Connection conn, String title) {
+		BlackjackFrame frame = new BlackjackFrame(conn, title, MainApp.username);
 		frame.setVisible(true);
 		return frame;
 	}
