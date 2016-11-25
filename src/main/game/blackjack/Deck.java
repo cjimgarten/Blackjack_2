@@ -2,12 +2,12 @@
  * Deck.java
  * 
  * created: 11-02-2016
- * modified: 11-20-2016
+ * modified: 11-23-2016
  * 
  * class represents a deck of cards
  */
 
-package main.game;
+package main.game.blackjack;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class Deck extends ArrayList<Card> {
 				value--;
 			}
 			for (int j = 0; j < s; j++) {
-				Card c = new Card(ranks[i], suits[j], value, false, "../png/" + ranks[i].toLowerCase() + "_of_" + suits[j].toLowerCase() + "s.png", this.cardWidth, this.cardHeight);
+				Card c = new Card(ranks[i], suits[j], value, false, "../../png/" + ranks[i].toLowerCase() + "_of_" + suits[j].toLowerCase() + "s.png", this.cardWidth, this.cardHeight);
 				this.add(c);
 			}
 		}

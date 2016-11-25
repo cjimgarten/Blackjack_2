@@ -2,12 +2,12 @@
  * Card.java
  * 
  * created: 11-02-2016
- * modified: 11-14-2016
+ * modified: 11-23-2016
  * 
  * class represents a playing card
  */
 
-package main.game;
+package main.game.blackjack;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -34,7 +34,7 @@ public class Card {
 		this.value = value;
 		this.visible = visible;
 		this.upImageIcon = new ImageIcon(getClass().getResource(imagePath));
-		this.downImageIcon = new ImageIcon(getClass().getResource("../png/card_back_black.png"));
+		this.downImageIcon = new ImageIcon(getClass().getResource("../../png/card_back_black.png"));
 		this.resizeImageIcons(imgWidth, imgHeight); // resize card ImageIcons
 		this.upImageLabel = new JLabel(this.upImageIcon);
 		this.downImageLabel = new JLabel(this.downImageIcon);

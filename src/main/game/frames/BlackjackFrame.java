@@ -2,12 +2,12 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 11-23-2016
+ * modified: 11-25-2016
  * 
  * graphical user interface for playing blackjack
  */
 
-package main.game.frame;
+package main.game.frames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,7 +15,9 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -29,6 +31,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import main.MainApp;
 import main.game.panels.BlackjackPanel;
@@ -47,7 +50,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu menu;
-	private JMenuItem depositItem, withdrawItem, logoutItem;
+	private JMenuItem depositItem, withdrawItem, exportItem, logoutItem;
 	private JTabbedPane tabbedPane;
 	private BlackjackPanel blackjackPanel;
 	private TransactionsPanel transactionsPanel;
@@ -55,6 +58,10 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	
 	// array for frame bounds
 	private int[] frameBounds = { 100, 100, 800, 600 };
+	
+	// define a few constants
+	private final String DEPOSIT = "deposit";
+	private final String WITHDRAWAL = "withdrawal";
 	
 	/**
 	 * create the frame
@@ -128,11 +135,14 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.depositItem.addActionListener(this);
 		this.withdrawItem = new JMenuItem("Withdrawal");
 		this.withdrawItem.addActionListener(this);
+		this.exportItem = new JMenuItem("Export");
+		this.exportItem.addActionListener(this);
 		this.logoutItem = new JMenuItem("Logout");
 		this.logoutItem.addActionListener(this);
 		this.menuBar.add(this.menu);
 		this.menu.add(this.depositItem);
 		this.menu.add(this.withdrawItem);
+		this.menu.add(this.exportItem);
 		this.menu.add(this.logoutItem);
 		this.setJMenuBar(this.menuBar);
 		
@@ -169,7 +179,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 				return;
 			}
 			try {
-				this.executeTransaction("deposit", deposit);
+				this.executeTransaction(this.DEPOSIT, deposit);
 			} catch (SQLException exc) {
 				System.err.println(exc.getMessage());
 				exc.printStackTrace();
@@ -180,11 +190,15 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 				return;
 			}
 			try {
-				this.executeTransaction("withdrawal", withdrawal);
+				this.executeTransaction(this.WITHDRAWAL, withdrawal);
 			} catch (SQLException exc) {
 				System.err.println(exc.getMessage());
 				exc.printStackTrace();
 			}
+		} else if (source.equals(this.exportItem)) { // allow the user to export data
+			this.exportTransactions();
+			this.exportOutcomes();
+			JOptionPane.showMessageDialog(this, "Exported successfully");
 		} else { // change the users' login status
 			MainApp.loggedIn = false;
 		}
@@ -212,6 +226,90 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			return amount;
 		}
 		return amount;
+	}
+	
+	/**
+	 * export users transactions to a file
+	 */
+	public void exportTransactions() {
+		// get users transactions data from database
+		ResultSet transactions = this.getAllUserData("transactions");
+		
+		// write data to a file
+		FileOutputStream out = null;
+		String filename = "exported/transactions.csv";
+		try {
+			out = new FileOutputStream(filename);
+			ArrayList<String> items = new ArrayList<String>();
+			items.add("id");
+			items.add("user_id");
+			items.add("date");
+			items.add("time");
+			items.add("transaction");
+			items.add("amount");
+			items.add("old_bal");
+			items.add("new_bal");
+			items.add("time_stamp");
+			
+			// write transactions to file
+			while (transactions.next()) { // iterate over rows
+				for (int i = 0; i < items.size(); i++) { // iterate over columns
+					String item = transactions.getString(items.get(i));
+					char[] itemArr = item.toCharArray();
+					for (int j = 0; j < itemArr.length; j++) { // iterate over characters
+						out.write(itemArr[j]);
+					}
+					out.write(',');
+				}
+				out.write('\n');
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * export users outcomes to a file
+	 */
+	public void exportOutcomes() {
+		// get users data from database
+		ResultSet outcomes = this.getAllUserData("outcomes");
+		
+		// write users data to a file
+		FileOutputStream out = null;
+		String filename = "exported/outcomes.csv";
+		try {
+			out = new FileOutputStream(filename);
+			ArrayList<String> items = new ArrayList<String>();
+			items.add("id");
+			items.add("user_id");
+			items.add("date");
+			items.add("time");
+			items.add("outcome");
+			items.add("wager");
+			items.add("old_bal");
+			items.add("new_bal");
+			items.add("time_stamp");
+			
+			// write transactions to file
+			while (outcomes.next()) { // iterate over rows
+				for (int i = 0; i < items.size(); i++) { // iterate over columns
+					String item = outcomes.getString(items.get(i));
+					char[] itemArr = item.toCharArray();
+					for (int j = 0; j < itemArr.length; j++) { // iterate over characters
+						out.write(itemArr[j]);
+					}
+					out.write(',');
+				}
+				out.write('\n');
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -263,7 +361,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * pull user data from database
+	 * pull specific user data from database
 	 */
 	public String getUserData(String data) throws SQLException {
 		String returnData = "";
@@ -284,6 +382,23 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			}
 		}
 		return returnData;
+	}
+	
+	/**
+	 * pull all user data from database
+	 */
+	public ResultSet getAllUserData(String table) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			String query = "SELECT * FROM " + table + " WHERE user_id = '" + this.id + "'";
+			stmt = this.conn.createStatement();
+			rs = stmt.executeQuery(query);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		} 
+		return rs;
 	}
 	
 	/**

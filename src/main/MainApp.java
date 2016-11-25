@@ -2,7 +2,7 @@
  * MainApp.java
  * 
  * created: 10-01-2016
- * modified: 11-23-2016
+ * modified: 11-25-2016
  * 
  * main application entry point
  */
@@ -19,8 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import main.game.frame.BlackjackFrame;
-import main.login.frame.LoginFrame;
+import main.game.frames.BlackjackFrame;
+import main.login.frames.LoginFrame;
 
 public class MainApp {
 	
@@ -29,9 +29,9 @@ public class MainApp {
 	public static String username = "";
 	
 	// DB credentials
-	private final String dbms_username = ""; /* dbms_username */
-	private final String dbms_password = ""; /* dbms_password */
-	private final String db_name = ""; /* db_name */
+	private final String DBMS_USERNAME = ""; /* dbms_username */
+	private final String DBMS_PASSWORD = ""; /* dbms_password */
+	private final String DB_NAME = ""; /* db_name */
 	
 	// SQL connection
 	private Connection conn;
@@ -45,12 +45,14 @@ public class MainApp {
 	
 	// application logo
 	private Image logo;
+	private String logoPath = "png/jack_of_spades2.png";
 	
 	/**
 	 * launch the application
 	 */
 	public static void main(String[] args) {
 		MainApp app = new MainApp("Blackjack");
+		app.startApplication();
 	}
 	
 	/**
@@ -59,27 +61,25 @@ public class MainApp {
 	public MainApp(String title) {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
-				dbms_username,
-				dbms_password,
-				db_name
+				this.DBMS_USERNAME,
+				this.DBMS_PASSWORD,
+				this.DB_NAME
 			);
 		this.applicationTitle = title;
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("png/jack_of_spades2.png"));
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
-		this.startApplication();
 	}
 	
 	public MainApp() {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
-				dbms_username,
-				dbms_password,
-				db_name
+				this.DBMS_USERNAME,
+				this.DBMS_PASSWORD,
+				this.DB_NAME
 			);
 		this.applicationTitle = "MainApp";
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("png/jack_of_spades2.png"));
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
-		this.startApplication();
 	}
 	
 	/**

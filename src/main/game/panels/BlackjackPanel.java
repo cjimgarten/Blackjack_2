@@ -2,7 +2,7 @@
  * BlackjackPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-23-2016
+ * modified: 11-25-2016
  * 
  * panel for blackjack
  */
@@ -29,9 +29,9 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import main.MainApp;
-import main.game.Blackjack;
-import main.game.Card;
-import main.game.Player;
+import main.game.blackjack.Blackjack;
+import main.game.blackjack.Card;
+import main.game.blackjack.Player;
 
 public class BlackjackPanel extends JPanel implements ActionListener {
 	
@@ -60,6 +60,11 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 	// shift the cards by this value
 	private static final int SHIFT_X = 40;
 	private static final int SHIFT_Y = 15;
+	
+	// define a few constants
+	private final String WIN = "winner";
+	private final String LOSE = "loser";
+	private final String DRAW = "draw";
 	
 	/**
 	 * create the panel
@@ -229,7 +234,7 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 			if (value > 21) {
 				this.disableButtons();
 				JOptionPane.showMessageDialog(this, "YOU WENT OVER! YOU LOSE!");
-				this.insertOutcome("loser"); // insert result into outcomes table
+				this.insertOutcome(this.LOSE); // insert result into outcomes table
 				this.dealBtn.setEnabled(true);
 			}
 		} else if (source.equals(this.stayBtn)){ /* dealers turn */
@@ -243,20 +248,20 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 			}
 			if (value > 21) {
 				JOptionPane.showMessageDialog(this, "DEALER WENT OVER! YOU WIN!");
-				this.insertOutcome("winner"); // insert result into outcomes table
+				this.insertOutcome(this.WIN); // insert result into outcomes table
 				this.dealBtn.setEnabled(true);
 			} else {
 				int userValue = this.game.getUser().getValue();
 				int dealerValue = this.game.getDealer().getValue();
 				if (userValue > dealerValue) {
 					JOptionPane.showMessageDialog(this, "YOU WIN!");
-					this.insertOutcome("winner"); // insert result into outcomes table
+					this.insertOutcome(this.WIN); // insert result into outcomes table
 				} else if (userValue < dealerValue) {
 					JOptionPane.showMessageDialog(this, "YOU LOSE!");
-					this.insertOutcome("loser");  // insert result into outcomes table
+					this.insertOutcome(this.LOSE);  // insert result into outcomes table
 				} else {
 					JOptionPane.showMessageDialog(this, "IT'S A DRAW!");
-					this.insertOutcome("draw"); // insert result into outcomes table
+					this.insertOutcome(this.DRAW); // insert result into outcomes table
 				}
 				this.dealBtn.setEnabled(true);
 			}

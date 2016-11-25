@@ -2,12 +2,12 @@
  * LoginFrame.java
  * 
  * created: 10-01-2016
- * modified: 11-23-2016
+ * modified: 11-25-2016
  * 
  * existing user login and new user registration frame
  */
 
-package main.login.frame;
+package main.login.frames;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
