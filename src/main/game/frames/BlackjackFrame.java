@@ -241,6 +241,22 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
+	 * get data from database
+	 */
+	public ResultSet getData(String query) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = this.conn.createStatement();
+			rs = stmt.executeQuery(query);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		} 
+		return rs;
+	}
+	
+	/**
 	 * export users transactions to a file
 	 */
 	public void exportTransactions() {
@@ -268,9 +284,8 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			while (transactions.next()) { // iterate over rows
 				for (int i = 0; i < items.size(); i++) { // iterate over columns
 					String item = transactions.getString(items.get(i));
-					char[] itemArr = item.toCharArray();
-					for (int j = 0; j < itemArr.length; j++) { // iterate over characters
-						out.write(itemArr[j]);
+					for (int j = 0; j < item.length(); j++) { // iterate over characters
+						out.write(item.charAt(j));
 					}
 					out.write(',');
 				}
@@ -311,9 +326,8 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			while (outcomes.next()) { // iterate over rows
 				for (int i = 0; i < items.size(); i++) { // iterate over columns
 					String item = outcomes.getString(items.get(i));
-					char[] itemArr = item.toCharArray();
-					for (int j = 0; j < itemArr.length; j++) { // iterate over characters
-						out.write(itemArr[j]);
+					for (int j = 0; j < item.length(); j++) { // iterate over characters
+						out.write(item.charAt(j));
 					}
 					out.write(',');
 				}
@@ -372,22 +386,6 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		
 		// update GUI
 		this.update();
-	}
-	
-	/**
-	 * get data from database
-	 */
-	public ResultSet getData(String query) {
-		Statement stmt = null;
-		ResultSet rs = null;
-		try {
-			stmt = this.conn.createStatement();
-			rs = stmt.executeQuery(query);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		} 
-		return rs;
 	}
 	
 	/**

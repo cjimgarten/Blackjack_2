@@ -1,5 +1,5 @@
 # Blackjack_2
-Description: Blackjack Application
+Description: Blackjack Application created using Java
 
 Log into an existing account:
 ![Alt text](./screenshots/login.png?raw=true "Login")
