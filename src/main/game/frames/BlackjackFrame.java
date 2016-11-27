@@ -2,7 +2,7 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 11-25-2016
+ * modified: 11-26-2016
  * 
  * graphical user interface for playing blackjack
  */
@@ -72,8 +72,12 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.setIconImage(logo);
 		this.username = username;
 		try {
-			this.id = this.getUserData("id");
-			this.balance = this.getUserData("balance");
+			String query = "SELECT id, balance FROM users WHERE username = '" + this.username + "'";
+			ResultSet userData = this.getData(query);
+			while (userData.next()) {
+				this.id = userData.getString("id");
+				this.balance = userData.getString("balance");
+			}
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -85,8 +89,12 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.conn = conn;
 		this.username = username;
 		try {
-			this.id = this.getUserData("id");
-			this.balance = this.getUserData("balance");
+			String query = "SELECT id, balance FROM users WHERE username = '" + this.username + "'";
+			ResultSet userData = this.getData(query);
+			while (userData.next()) {
+				this.id = userData.getString("id");
+				this.balance = userData.getString("balance");
+			}
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -98,8 +106,12 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		this.conn = conn;
 		this.username = username;
 		try {
-			this.id = this.getUserData("id");
-			this.balance = this.getUserData("balance");
+			String query = "SELECT id, balance FROM users WHERE username = '" + this.username + "'";
+			ResultSet userData = this.getData(query);
+			while (userData.next()) {
+				this.id = userData.getString("id");
+				this.balance = userData.getString("balance");
+			}
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -233,7 +245,8 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	 */
 	public void exportTransactions() {
 		// get users transactions data from database
-		ResultSet transactions = this.getAllUserData("transactions");
+		String query = "SELECT * FROM transactions WHERE user_id = " + this.id;
+		ResultSet transactions = this.getData(query);
 		
 		// write data to a file
 		FileOutputStream out = null;
@@ -275,7 +288,8 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	 */
 	public void exportOutcomes() {
 		// get users data from database
-		ResultSet outcomes = this.getAllUserData("outcomes");
+		String query = "SELECT * FROM outcomes WHERE user_id = " + this.id;
+		ResultSet outcomes = this.getData(query);
 		
 		// write users data to a file
 		FileOutputStream out = null;
@@ -361,37 +375,12 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * pull specific user data from database
+	 * get data from database
 	 */
-	public String getUserData(String data) throws SQLException {
-		String returnData = "";
-		Statement stmt = null;
-		try {
-			String query = "SELECT " + data + " FROM users WHERE username = '" + this.username + "'";
-			stmt = this.conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				returnData = rs.getString(data);
-			}
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-		return returnData;
-	}
-	
-	/**
-	 * pull all user data from database
-	 */
-	public ResultSet getAllUserData(String table) {
+	public ResultSet getData(String query) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT * FROM " + table + " WHERE user_id = '" + this.id + "'";
 			stmt = this.conn.createStatement();
 			rs = stmt.executeQuery(query);
 		} catch (Exception e) {
