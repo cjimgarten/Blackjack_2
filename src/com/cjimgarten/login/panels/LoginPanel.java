@@ -71,7 +71,7 @@ public class LoginPanel extends BasePanel implements ActionListener {
 		try {
 			if (this.validateUser(username, password)) { // successful login attempt
 				MainApp.login(); // log the user in
-				MainApp.username = username; // store their username
+				MainApp.setUsername(username); // store their username
 			} else { // unsuccessful login attempt
 				JOptionPane.showMessageDialog(this, "Incorrect credentials");
 			}

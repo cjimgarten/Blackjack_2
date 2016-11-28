@@ -94,7 +94,7 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 			int registered = this.insertNewUser(username, password);
 			if (registered == 2) { // successful registration attempt
 				MainApp.login(); // log the user in
-				MainApp.username = username; // store their username
+				MainApp.setUsername(username); // store their username
 			} else if (registered == 1) { // unsuccessful registration attempt
 				JOptionPane.showMessageDialog(this, "Username is taken, please pick another");
 			} else {

@@ -26,7 +26,7 @@ public class MainApp {
 	
 	// users' login status
 	private static boolean loginStatus;
-	public static String username = "";
+	private static String username;
 	
 	// DB credentials
 	private final String DBMS_USERNAME = ""; /* dbms_username */
@@ -66,6 +66,7 @@ public class MainApp {
 				this.DB_NAME
 			);
 		MainApp.loginStatus = false;
+		MainApp.username = "";
 		this.applicationTitle = title;
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
@@ -79,6 +80,7 @@ public class MainApp {
 				this.DB_NAME
 			);
 		MainApp.loginStatus = false;
+		MainApp.username = "";
 		this.applicationTitle = "MainApp";
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
@@ -212,5 +214,12 @@ public class MainApp {
 	 */
 	public static boolean getLoginStatus() {
 		return MainApp.loginStatus;
+	}
+	
+	/**
+	 * set the users username
+	 */
+	public static void setUsername(String username) {
+		MainApp.username = username;
 	}
 }
