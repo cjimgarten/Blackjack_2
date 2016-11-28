@@ -36,14 +36,14 @@ public class LoginFrame extends JFrame {
 	 * create the frame
 	 */
 	public LoginFrame(Connection conn, String title, Image logo) {
-		super(title);
+		super(title + " (Login or Register)");
 		this.conn = conn;
 		this.setIconImage(logo);
 		this.configureFrame();
 	}
 	
 	public LoginFrame(Connection conn, String title) {
-		super(title);
+		super(title + " (Login or Register)");
 		this.conn = conn;
 		this.configureFrame();
 	}

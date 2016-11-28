@@ -81,7 +81,7 @@ public class MainApp {
 			);
 		MainApp.loginStatus = false;
 		MainApp.username = "";
-		this.applicationTitle = "MainApp";
+		this.applicationTitle = "Blackjack";
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
 	}
@@ -112,13 +112,11 @@ public class MainApp {
 			System.err.println("Unable to establish database connection");
 			return;
 		}
+		JFrame.setDefaultLookAndFeelDecorated(true); // set the look and feel of frames
 		
 		while (true) {
 			// start application
-			this.loginFrame = this.invokeLoginFrame(
-					this.conn, 
-					"Login or Register"
-				);
+			this.loginFrame = this.invokeLoginFrame(this.conn);
 			
 			// monitor the users login status
 			while (true) {
@@ -140,10 +138,7 @@ public class MainApp {
 			this.loginFrame.dispose();
 			
 			// start blackjack
-			this.blackjackFrame = this.invokeBlackjackFrame(
-					this.conn, 
-					"Blackjack"
-				);
+			this.blackjackFrame = this.invokeBlackjackFrame(this.conn);
 			int option = JOptionPane.showConfirmDialog(
 					this.blackjackFrame,
 					"Are you ready to play?",
@@ -179,9 +174,8 @@ public class MainApp {
 	/**
 	 *  start a login frame
 	 */
-	public LoginFrame invokeLoginFrame(Connection conn, String title) {
-		JFrame.setDefaultLookAndFeelDecorated(true);
-		LoginFrame frame = new LoginFrame(conn, title, this.logo);
+	public LoginFrame invokeLoginFrame(Connection conn) {
+		LoginFrame frame = new LoginFrame(conn, this.applicationTitle, this.logo);
 		frame.setVisible(true);
 		return frame;
 	}
@@ -189,8 +183,8 @@ public class MainApp {
 	/**
 	 *  start blackjack
 	 */
-	public BlackjackFrame invokeBlackjackFrame(Connection conn, String title) {
-		BlackjackFrame frame = new BlackjackFrame(conn, title, this.logo, MainApp.username);
+	public BlackjackFrame invokeBlackjackFrame(Connection conn) {
+		BlackjackFrame frame = new BlackjackFrame(conn, this.applicationTitle, this.logo, MainApp.username);
 		frame.setVisible(true);
 		return frame;
 	}
