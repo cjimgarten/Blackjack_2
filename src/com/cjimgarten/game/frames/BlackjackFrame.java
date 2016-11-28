@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -260,82 +259,75 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 	 * export users transactions to a file
 	 */
 	public void exportTransactions() {
-		// get users transactions data from database
+		// get users transaction data
 		String query = "SELECT * FROM transactions WHERE user_id = " + this.id;
 		ResultSet transactions = this.getData(query);
 		
-		// write data to a file
-		FileOutputStream out = null;
-		String filename = "exported/transactions.csv";
-		try {
-			out = new FileOutputStream(filename);
-			ArrayList<String> items = new ArrayList<String>();
-			items.add("id");
-			items.add("user_id");
-			items.add("date");
-			items.add("time");
-			items.add("transaction");
-			items.add("amount");
-			items.add("old_bal");
-			items.add("new_bal");
-			items.add("time_stamp");
+		// specify a file path
+		String path = "exported/transactions.csv";
+		
+		// store table column names
+		ArrayList<String> columns = new ArrayList<String>();
+		columns.add("id");
+		columns.add("user_id");
+		columns.add("date");
+		columns.add("time");
+		columns.add("transaction");
+		columns.add("amount");
+		columns.add("old_bal");
+		columns.add("new_bal");
+		columns.add("time_stamp");
 			
-			// write transactions to file
-			while (transactions.next()) { // iterate over rows
-				for (int i = 0; i < items.size(); i++) { // iterate over columns
-					String item = transactions.getString(items.get(i));
-					for (int j = 0; j < item.length(); j++) { // iterate over characters
-						out.write(item.charAt(j));
-					}
-					out.write(',');
-				}
-				out.write('\n');
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		// write transactions to file
+		this.writeToFile(path, transactions, columns);
 	}
 	
 	/**
 	 * export users outcomes to a file
 	 */
 	public void exportOutcomes() {
-		// get users data from database
+		// get users outcome data
 		String query = "SELECT * FROM outcomes WHERE user_id = " + this.id;
 		ResultSet outcomes = this.getData(query);
 		
-		// write users data to a file
+		// specify a file path
+		String path = "exported/outcomes.csv";
+		
+		// store table column names
+		ArrayList<String> columns = new ArrayList<String>();
+		columns.add("id");
+		columns.add("user_id");
+		columns.add("date");
+		columns.add("time");
+		columns.add("outcome");
+		columns.add("wager");
+		columns.add("old_bal");
+		columns.add("new_bal");
+		columns.add("time_stamp");
+		
+		// write outcomes to file
+		this.writeToFile(path, outcomes, columns);
+	}
+	
+	/**
+	 * write users data (rs) to a file (path)
+	 */
+	private void writeToFile(String path, ResultSet rs, ArrayList<String> columns) {
 		FileOutputStream out = null;
-		String filename = "exported/outcomes.csv";
 		try {
-			out = new FileOutputStream(filename);
-			ArrayList<String> items = new ArrayList<String>();
-			items.add("id");
-			items.add("user_id");
-			items.add("date");
-			items.add("time");
-			items.add("outcome");
-			items.add("wager");
-			items.add("old_bal");
-			items.add("new_bal");
-			items.add("time_stamp");
-			
-			// write transactions to file
-			while (outcomes.next()) { // iterate over rows
-				for (int i = 0; i < items.size(); i++) { // iterate over columns
-					String item = outcomes.getString(items.get(i));
-					for (int j = 0; j < item.length(); j++) { // iterate over characters
-						out.write(item.charAt(j));
+			out = new FileOutputStream(path);
+			while (rs.next()) { // iterate over rows
+				for (int i = 0; i < columns.size(); i++) { // iterate over columns
+					String column = rs.getString(columns.get(i));
+					for (int j = 0; j < column.length(); j++) { // iterate over characters
+						out.write(column.charAt(j));
 					}
 					out.write(',');
 				}
 				out.write('\n');
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
