@@ -2,12 +2,12 @@
  * TransactionsPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-20-2016
+ * modified: 11-27-2016
  * 
  * panel to display transactions (withdrawals and deposits)
  */
 
-package main.game.panels;
+package com.cjimgarten.game.panels;
 
 import java.awt.BorderLayout;
 import java.sql.Connection;

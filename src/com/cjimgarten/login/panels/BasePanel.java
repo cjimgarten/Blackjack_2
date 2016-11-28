@@ -2,12 +2,12 @@
  * BasePanel.java
  * 
  * created: 11-13-2016
- * modified: 11-13-2016
+ * modified: 11-27-2016
  * 
  * base class for shared functionality between LoginPanel and RegisterPanel
  */
 
-package main.login.panels;
+package com.cjimgarten.login.panels;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

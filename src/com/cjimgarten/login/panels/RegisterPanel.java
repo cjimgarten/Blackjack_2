@@ -2,12 +2,12 @@
  * RegisterPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-23-2016
+ * modified: 11-27-2016
  * 
  * panel for user to register a new account
  */
 
-package main.login.panels;
+package com.cjimgarten.login.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import main.MainApp;
+import com.cjimgarten.MainApp;
 
 public class RegisterPanel extends BasePanel implements ActionListener {
 

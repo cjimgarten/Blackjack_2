@@ -2,12 +2,12 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 11-26-2016
+ * modified: 11-27-2016
  * 
  * graphical user interface for playing blackjack
  */
 
-package main.game.frames;
+package com.cjimgarten.game.frames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,10 +33,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import main.MainApp;
-import main.game.panels.BlackjackPanel;
-import main.game.panels.TransactionsPanel;
-import main.game.panels.OutcomesPanel;
+import com.cjimgarten.MainApp;
+import com.cjimgarten.game.panels.BlackjackPanel;
+import com.cjimgarten.game.panels.TransactionsPanel;
+import com.cjimgarten.game.panels.OutcomesPanel;
 
 public class BlackjackFrame extends JFrame implements ActionListener {
 

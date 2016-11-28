@@ -2,12 +2,12 @@
  * Player.java
  * 
  * created: 11-03-2016
- * modified: 11-23-2016
+ * modified: 11-27-2016
  * 
  * class represents a card player
  */
 
-package main.game.blackjack;
+package com.cjimgarten.game.blackjack;
 
 import java.util.ArrayList;
 

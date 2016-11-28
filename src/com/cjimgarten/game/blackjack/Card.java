@@ -2,12 +2,12 @@
  * Card.java
  * 
  * created: 11-02-2016
- * modified: 11-23-2016
+ * modified: 11-27-2016
  * 
  * class represents a playing card
  */
 
-package main.game.blackjack;
+package com.cjimgarten.game.blackjack;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;

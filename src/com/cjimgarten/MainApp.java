@@ -2,12 +2,12 @@
  * MainApp.java
  * 
  * created: 10-01-2016
- * modified: 11-25-2016
+ * modified: 11-27-2016
  * 
  * main application entry point
  */
 
-package main;
+package com.cjimgarten;
 
 import java.awt.Image;
 import java.sql.Connection;
@@ -19,8 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import main.game.frames.BlackjackFrame;
-import main.login.frames.LoginFrame;
+import com.cjimgarten.game.frames.BlackjackFrame;
+import com.cjimgarten.login.frames.LoginFrame;
 
 public class MainApp {
 	

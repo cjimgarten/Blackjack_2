@@ -2,12 +2,12 @@
  * LoginPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-23-2016
+ * modified: 11-27-2016
  * 
  * panel for user to login to an existing account
  */
 
-package main.login.panels;
+package com.cjimgarten.login.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
-import main.MainApp;
+import com.cjimgarten.MainApp;
 
 public class LoginPanel extends BasePanel implements ActionListener {
 		

@@ -2,12 +2,12 @@
  * BlackjackPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-25-2016
+ * modified: 11-27-2016
  * 
  * panel for blackjack
  */
 
-package main.game.panels;
+package com.cjimgarten.game.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,10 +28,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import main.MainApp;
-import main.game.blackjack.Blackjack;
-import main.game.blackjack.Card;
-import main.game.blackjack.Player;
+import com.cjimgarten.MainApp;
+import com.cjimgarten.game.blackjack.Blackjack;
+import com.cjimgarten.game.blackjack.Card;
+import com.cjimgarten.game.blackjack.Player;
 
 public class BlackjackPanel extends JPanel implements ActionListener {
 	

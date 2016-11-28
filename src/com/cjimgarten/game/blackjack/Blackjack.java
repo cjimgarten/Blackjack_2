@@ -2,12 +2,12 @@
  * Blackjack.java
  * 
  * created: 11-03-2016
- * modified: 11-23-2016
+ * modified: 11-27-2016
  * 
  * class represents a game of blackjack
  */
 
-package main.game.blackjack;
+package com.cjimgarten.game.blackjack;
 
 public class Blackjack {
 

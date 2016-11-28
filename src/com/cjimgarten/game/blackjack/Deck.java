@@ -2,12 +2,12 @@
  * Deck.java
  * 
  * created: 11-02-2016
- * modified: 11-23-2016
+ * modified: 11-27-2016
  * 
  * class represents a deck of cards
  */
 
-package main.game.blackjack;
+package com.cjimgarten.game.blackjack;
 
 import java.util.ArrayList;
 
