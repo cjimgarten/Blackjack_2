@@ -7,6 +7,9 @@ Log into an existing account:
 Create a new account:
 ![Alt text](./screenshots/register.png?raw=true "Register")
 
+Place a bet:
+![Alt text](./screenshots/bet.png?raw=true "Bet")
+
 Play a hand of blackjack:
 ![Alt text](./screenshots/blackjack.png?raw=true "Blackjack")
 
