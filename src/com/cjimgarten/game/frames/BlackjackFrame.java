@@ -2,7 +2,7 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 11-27-2016
+ * modified: 11-28-2016
  * 
  * graphical user interface for playing blackjack
  */
@@ -211,7 +211,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			this.exportOutcomes();
 			JOptionPane.showMessageDialog(this, "Exported successfully");
 		} else { // change the users' login status
-			MainApp.loggedIn = false;
+			MainApp.logout();
 		}
 	}
 	

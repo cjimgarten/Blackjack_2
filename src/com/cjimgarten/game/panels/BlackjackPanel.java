@@ -2,7 +2,7 @@
  * BlackjackPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-27-2016
+ * modified: 11-28-2016
  * 
  * panel for blackjack
  */
@@ -401,7 +401,7 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 			}
 			bet = Double.parseDouble(betStr);
 		} catch (Exception e) { // if the user hits 'Cancel', log them out
-			MainApp.loggedIn = false;
+			MainApp.logout();
 		}
 		return bet;
 	}

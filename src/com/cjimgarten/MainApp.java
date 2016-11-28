@@ -2,7 +2,7 @@
  * MainApp.java
  * 
  * created: 10-01-2016
- * modified: 11-27-2016
+ * modified: 11-28-2016
  * 
  * main application entry point
  */
@@ -25,7 +25,7 @@ import com.cjimgarten.login.frames.LoginFrame;
 public class MainApp {
 	
 	// users' login status
-	public static boolean loggedIn = false;
+	private static boolean loginStatus;
 	public static String username = "";
 	
 	// DB credentials
@@ -65,6 +65,7 @@ public class MainApp {
 				this.DBMS_PASSWORD,
 				this.DB_NAME
 			);
+		MainApp.loginStatus = false;
 		this.applicationTitle = title;
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
@@ -77,6 +78,7 @@ public class MainApp {
 				this.DBMS_PASSWORD,
 				this.DB_NAME
 			);
+		MainApp.loginStatus = false;
 		this.applicationTitle = "MainApp";
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
@@ -115,10 +117,11 @@ public class MainApp {
 					this.conn, 
 					"Login or Register"
 				);
-			// monitor the users' login status
+			
+			// monitor the users login status
 			while (true) {
-				// once the user is logged in, break the loop
-				if (MainApp.loggedIn) {
+				// once the users login status is true, break the loop
+				if (MainApp.getLoginStatus()) {
 					break;
 				}
 				
@@ -145,16 +148,16 @@ public class MainApp {
 					"Welcome",
 					JOptionPane.YES_NO_OPTION
 				);
-			if (option == 0) {
+			if (option == 0) { // if they user selects "Yes", start the game
 				this.blackjackFrame.getBlackjackPanel().startGame();
-			} else {
-				MainApp.loggedIn = false;
+			} else { // if the user selects "No", log them out
+				MainApp.logout();
 			}
 			
-			// monitor the users' login status
+			// monitor the users login status
 			while (true) {
-				// once the user is logged in, break the loop
-				if (!(MainApp.loggedIn)) {
+				// once the users login status is false, break the loop
+				if (!(MainApp.getLoginStatus())) {
 					break;
 				}
 				
@@ -188,5 +191,26 @@ public class MainApp {
 		BlackjackFrame frame = new BlackjackFrame(conn, title, this.logo, MainApp.username);
 		frame.setVisible(true);
 		return frame;
+	}
+	
+	/**
+	 * log the user in
+	 */
+	public static void login() {
+		MainApp.loginStatus = true;
+	}
+	
+	/**
+	 * log the user out
+	 */
+	public static void logout() {
+		MainApp.loginStatus = false;
+	}
+	
+	/**
+	 * get users login status
+	 */
+	public static boolean getLoginStatus() {
+		return MainApp.loginStatus;
 	}
 }
