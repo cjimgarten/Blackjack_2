@@ -2,7 +2,7 @@
  * BlackjackPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-28-2016
+ * modified: 11-29-2016
  * 
  * panel for blackjack
  */
@@ -395,9 +395,16 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 	public double placeBet() {
 		String betStr = JOptionPane.showInputDialog(this, "How much would you like to bet?");
 		double bet = 0.00;
+		double balance = Double.parseDouble(this.balance);
 		try {
-			while (betStr.equals("") || Double.parseDouble(betStr) < 10) {
-				betStr = JOptionPane.showInputDialog(this, "You must place a bet to play!\n$10 is the minimum bet!");
+			while (betStr.equals("") || Double.parseDouble(betStr) < 10 || Double.parseDouble(betStr) > balance) {
+				if (betStr.equals("")) {
+					betStr = JOptionPane.showInputDialog(this, "You must place a bet");
+				} else if (Double.parseDouble(betStr) < 10) {
+					betStr = JOptionPane.showInputDialog(this, "$10 is the minimum bet");
+				} else {
+					betStr = JOptionPane.showInputDialog(this, "You cannot bet more than your balance");
+				}
 			}
 			bet = Double.parseDouble(betStr);
 		} catch (Exception e) { // if the user hits 'Cancel', log them out
