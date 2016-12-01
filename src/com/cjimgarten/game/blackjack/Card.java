@@ -2,7 +2,7 @@
  * Card.java
  * 
  * created: 11-02-2016
- * modified: 11-27-2016
+ * modified: 11-30-2016
  * 
  * class represents a playing card
  */
@@ -20,37 +20,33 @@ public class Card {
 	private final String suit;
 	private int value;
 	private boolean visible;
-	private ImageIcon upImageIcon;
-	private ImageIcon downImageIcon;
 	private JLabel upImageLabel;
 	private JLabel downImageLabel;
 	
 	/**
 	 * create a card
 	 */
-	public Card(String rank, String suit, int value, boolean visible, String imagePath, int imgWidth, int imgHeight) {
+	public Card(String rank, String suit, int value, boolean visible, String imagePath, int imageWidth, int imageHeight) {
 		this.rank = rank;
 		this.suit = suit;
 		this.value = value;
 		this.visible = visible;
-		this.upImageIcon = new ImageIcon(getClass().getResource(imagePath));
-		this.downImageIcon = new ImageIcon(getClass().getResource("../../png/card_back_black.png"));
-		this.resizeImageIcons(imgWidth, imgHeight); // resize card ImageIcons
-		this.upImageLabel = new JLabel(this.upImageIcon);
-		this.downImageLabel = new JLabel(this.downImageIcon);
+		ImageIcon upImageIcon = new ImageIcon(getClass().getResource(imagePath));
+		ImageIcon downImageIcon = new ImageIcon(getClass().getResource("../../png/card_back_black.png"));
+		upImageIcon = this.resizeImageIcon(upImageIcon, imageWidth, imageHeight); // resize upImageIcon
+		downImageIcon = this.resizeImageIcon(downImageIcon, imageWidth, imageHeight); // resize downImageIcon
+		this.upImageLabel = new JLabel(upImageIcon);
+		this.downImageLabel = new JLabel(downImageIcon);
 	}
 	
 	/**
-	 * resize the image icons for this card
+	 * resize and return an image icon
 	 */
-	private void resizeImageIcons(int width, int height) {
-		Image image = this.upImageIcon.getImage();
+	private ImageIcon resizeImageIcon(ImageIcon imageIcon, int width, int height) {
+		Image image = imageIcon.getImage();
 		image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-		this.upImageIcon = new ImageIcon(image);
-		
-		image = this.downImageIcon.getImage();
-		image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-		this.downImageIcon = new ImageIcon(image);
+		imageIcon = new ImageIcon(image);
+		return imageIcon;
 	}
 	
 	/**
@@ -79,13 +75,6 @@ public class Card {
 	
 	public boolean getVisibility() {
 		return this.visible;
-	}
-	
-	public ImageIcon getImageIcon() {
-		if (this.visible) {
-			return this.upImageIcon;
-		}
-		return this.downImageIcon;
 	}
 	
 	public JLabel getImageLabel() {
