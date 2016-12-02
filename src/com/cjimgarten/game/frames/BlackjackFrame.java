@@ -4,7 +4,7 @@
  * created: 10-30-2016
  * modified: 12-02-2016
  * 
- * graphical user interface for playing blackjack
+ * frame for blackjack
  */
 
 package com.cjimgarten.game.frames;
