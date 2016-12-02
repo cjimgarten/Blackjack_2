@@ -4,7 +4,7 @@
  * created: 10-01-2016
  * modified: 11-28-2016
  * 
- * main application entry point
+ * blackjack desktop application
  */
 
 package com.cjimgarten;

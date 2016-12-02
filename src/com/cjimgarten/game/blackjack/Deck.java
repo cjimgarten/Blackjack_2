@@ -2,7 +2,7 @@
  * Deck.java
  * 
  * created: 11-02-2016
- * modified: 11-27-2016
+ * modified: 12-01-2016
  * 
  * class represents a deck of cards
  */
@@ -39,13 +39,15 @@ public class Deck extends ArrayList<Card> {
 		for (int i = 0; i < r; i++) {
 			if (ranks[i].equals("Ace")) {
 				value = 11;
-			} else if (ranks[i].equals("King") || ranks[i].equals("Queen") || ranks[i].equals("Jack") || ranks[i].equals("10")) {
+			} else if (ranks[i].equals("King") || ranks[i].equals("Queen") || 
+					ranks[i].equals("Jack") || ranks[i].equals("10")) {
 				value = 10;
 			} else {
 				value--;
 			}
 			for (int j = 0; j < s; j++) {
-				Card c = new Card(ranks[i], suits[j], value, false, "../../png/" + ranks[i].toLowerCase() + "_of_" + suits[j].toLowerCase() + "s.png", this.cardWidth, this.cardHeight);
+				String imagePath = "../../png/" + ranks[i].toLowerCase() + "_of_" + suits[j].toLowerCase() + "s.png";
+				Card c = new Card(ranks[i], suits[j], value, false, imagePath, this.cardWidth, this.cardHeight);
 				this.add(c);
 			}
 		}

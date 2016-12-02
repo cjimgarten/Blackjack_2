@@ -2,7 +2,7 @@
  * Player.java
  * 
  * created: 11-03-2016
- * modified: 11-27-2016
+ * modified: 12-01-2016
  * 
  * class represents a card player
  */
@@ -57,7 +57,7 @@ public class Player extends ArrayList<Card> {
 		// iterate over the players hand to calculate the total value
 		for (int i = 0; i < this.size(); i++) {
 			// keep a count of how many aces are in the players current hand
-			if (this.get(i).getRank().compareTo("Ace") == 0) {
+			if (this.get(i).getRank().equals("Ace")) {
 				aces.add(i);
 			}
 			this.value += this.get(i).getValue();
