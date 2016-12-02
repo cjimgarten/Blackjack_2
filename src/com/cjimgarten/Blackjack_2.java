@@ -1,8 +1,8 @@
 /*
- * MainApp.java
+ * Blackjack_2.java
  * 
  * created: 10-01-2016
- * modified: 11-28-2016
+ * modified: 12-02-2016
  * 
  * blackjack desktop application
  */
@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import com.cjimgarten.game.frames.BlackjackFrame;
 import com.cjimgarten.login.frames.LoginFrame;
 
-public class MainApp {
+public class Blackjack_2 {
 	
 	// users' login status
 	private static boolean loginStatus;
@@ -51,36 +51,36 @@ public class MainApp {
 	 * launch the application
 	 */
 	public static void main(String[] args) {
-		MainApp app = new MainApp("Blackjack");
+		Blackjack_2 app = new Blackjack_2("Blackjack");
 		app.startApplication();
 	}
 	
 	/**
 	 * create an instance
 	 */
-	public MainApp(String title) {
+	public Blackjack_2(String title) {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
 				this.DBMS_USERNAME,
 				this.DBMS_PASSWORD,
 				this.DB_NAME
 			);
-		MainApp.loginStatus = false;
-		MainApp.username = "";
+		Blackjack_2.loginStatus = false;
+		Blackjack_2.username = "";
 		this.applicationTitle = title;
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
 	}
 	
-	public MainApp() {
+	public Blackjack_2() {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
 				this.DBMS_USERNAME,
 				this.DBMS_PASSWORD,
 				this.DB_NAME
 			);
-		MainApp.loginStatus = false;
-		MainApp.username = "";
+		Blackjack_2.loginStatus = false;
+		Blackjack_2.username = "";
 		this.applicationTitle = "Blackjack";
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
 		this.logo = imageIcon.getImage();
@@ -121,7 +121,7 @@ public class MainApp {
 			// monitor the users login status
 			while (true) {
 				// once the users login status is true, break the loop
-				if (MainApp.getLoginStatus()) {
+				if (Blackjack_2.getLoginStatus()) {
 					break;
 				}
 				
@@ -148,13 +148,13 @@ public class MainApp {
 			if (option == 0) { // if they user selects "Yes", start the game
 				this.blackjackFrame.getBlackjackPanel().startGame();
 			} else { // if the user selects "No", log them out
-				MainApp.logout();
+				Blackjack_2.logout();
 			}
 			
 			// monitor the users login status
 			while (true) {
 				// once the users login status is false, break the loop
-				if (!(MainApp.getLoginStatus())) {
+				if (!(Blackjack_2.getLoginStatus())) {
 					break;
 				}
 				
@@ -184,7 +184,7 @@ public class MainApp {
 	 *  start blackjack
 	 */
 	public BlackjackFrame invokeBlackjackFrame(Connection conn) {
-		BlackjackFrame frame = new BlackjackFrame(conn, this.applicationTitle, this.logo, MainApp.username);
+		BlackjackFrame frame = new BlackjackFrame(conn, this.applicationTitle, this.logo, Blackjack_2.username);
 		frame.setVisible(true);
 		return frame;
 	}
@@ -193,27 +193,27 @@ public class MainApp {
 	 * log the user in
 	 */
 	public static void login() {
-		MainApp.loginStatus = true;
+		Blackjack_2.loginStatus = true;
 	}
 	
 	/**
 	 * log the user out
 	 */
 	public static void logout() {
-		MainApp.loginStatus = false;
+		Blackjack_2.loginStatus = false;
 	}
 	
 	/**
 	 * get users login status
 	 */
 	public static boolean getLoginStatus() {
-		return MainApp.loginStatus;
+		return Blackjack_2.loginStatus;
 	}
 	
 	/**
 	 * set the users username
 	 */
 	public static void setUsername(String username) {
-		MainApp.username = username;
+		Blackjack_2.username = username;
 	}
 }

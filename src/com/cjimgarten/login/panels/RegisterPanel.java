@@ -2,7 +2,7 @@
  * RegisterPanel.java
  * 
  * created: 11-08-2016
- * modified: 11-28-2016
+ * modified: 12-02-2016
  * 
  * panel for user to register a new account
  */
@@ -11,6 +11,7 @@ package com.cjimgarten.login.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import com.cjimgarten.MainApp;
+import com.cjimgarten.Blackjack_2;
 
 public class RegisterPanel extends BasePanel implements ActionListener {
 
@@ -93,8 +94,8 @@ public class RegisterPanel extends BasePanel implements ActionListener {
 		try {
 			int registered = this.insertNewUser(username, password);
 			if (registered == 2) { // successful registration attempt
-				MainApp.login(); // log the user in
-				MainApp.setUsername(username); // store their username
+				Blackjack_2.login(); // log the user in
+				Blackjack_2.setUsername(username); // store their username
 			} else if (registered == 1) { // unsuccessful registration attempt
 				JOptionPane.showMessageDialog(this, "Username is taken, please pick another");
 			} else {
