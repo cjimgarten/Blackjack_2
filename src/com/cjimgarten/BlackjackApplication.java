@@ -36,12 +36,11 @@ public class BlackjackApplication {
 	
 	// application logo
 	private Image logo;
-	private String logoPath = "png/jack_of_spades2.png";
 	
 	/**
 	 * create an instance
 	 */
-	public BlackjackApplication(String title, String db_username, String db_password, String db_name) {
+	public BlackjackApplication(String title, String logoPath, String db_username, String db_password, String db_name) {
 		// establish a database connection
 		this.conn =  this.connectToDatabase(
 				db_username,
@@ -51,7 +50,7 @@ public class BlackjackApplication {
 		Blackjack_2.logout(); // set loginStatus to false initially
 		Blackjack_2.setUsername(""); // set username to "" initially
 		this.applicationTitle = title;
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource(this.logoPath));
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource(logoPath));
 		this.logo = imageIcon.getImage();
 	}
 	

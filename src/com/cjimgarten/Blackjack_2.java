@@ -21,15 +21,19 @@ public class Blackjack_2 {
 	public static void main(String[] args) {
 		
 		// DB credentials
-		final String DBMS_USERNAME = ""; /* dbms_username */
-		final String DBMS_PASSWORD = ""; /* dbms_password */
-		final String DB_NAME = ""; /* db_name */
+		String dbms_username = ""; /* username to access MySQL */
+		String dbms_password = ""; /* password to access MySQL */
+		String db_name = ""; /* name of the database */
+		
+		// path to the application logo
+		String logoPath = "png/jack_of_spades2.png";
 		
 		BlackjackApplication app = new BlackjackApplication(
 				"Blackjack",
-				DBMS_USERNAME,
-				DBMS_PASSWORD,
-				DB_NAME
+				logoPath,
+				dbms_username,
+				dbms_password,
+				db_name
 			);
 		app.startApplication();
 	}
