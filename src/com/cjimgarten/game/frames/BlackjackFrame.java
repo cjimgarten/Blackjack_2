@@ -2,7 +2,7 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 12-02-2016
+ * modified: 12-03-2016
  * 
  * frame for blackjack
  */
@@ -32,7 +32,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.cjimgarten.Blackjack_2;
+import com.cjimgarten.Main;
 import com.cjimgarten.game.panels.BlackjackPanel;
 import com.cjimgarten.game.panels.TransactionsPanel;
 import com.cjimgarten.game.panels.OutcomesPanel;
@@ -211,7 +211,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			this.exportOutcomes();
 			JOptionPane.showMessageDialog(this, "Exported successfully");
 		} else { // change the users' login status
-			Blackjack_2.logout();
+			Main.logout();
 		}
 	}
 	

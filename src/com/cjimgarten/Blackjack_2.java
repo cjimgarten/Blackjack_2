@@ -1,75 +1,159 @@
 /*
  * Blackjack_2.java
  * 
- * created: 10-01-2016
- * modified: 12-02-2016
+ * created: 12-02-2016
+ * modified: 12-03-2016
  * 
  * blackjack desktop application
  */
 
 package com.cjimgarten;
 
+import java.awt.Image;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import com.cjimgarten.game.frames.BlackjackFrame;
+import com.cjimgarten.login.frames.LoginFrame;
+
 public class Blackjack_2 {
 	
-	// users' login status
-	private static boolean loginStatus;
-	private static String username;
+	// SQL connection
+	private Connection conn;
+	
+	// GUI components
+	private LoginFrame loginFrame;
+	private BlackjackFrame blackjackFrame;
+	
+	// title of the application
+	private String applicationTitle;
+	
+	// application logo
+	private Image logo;
 	
 	/**
-	 * launch the application
+	 * create an instance
 	 */
-	public static void main(String[] args) {
-		
-		// DB credentials
-		String dbms_username = ""; /* username to access MySQL */
-		String dbms_password = ""; /* password to access MySQL */
-		String db_name = ""; /* name of the database */
-		
-		// path to the application logo
-		String logoPath = "png/jack_of_spades2.png";
-		
-		BlackjackApplication app = new BlackjackApplication(
-				"Blackjack",
-				logoPath,
-				dbms_username,
-				dbms_password,
+	public Blackjack_2(String title, String logoPath, String db_username, String db_password, String db_name) {
+		// establish a database connection
+		this.conn =  this.connectToDatabase(
+				db_username,
+				db_password,
 				db_name
 			);
-		app.startApplication();
+		Main.logout(); // set loginStatus to false initially
+		Main.setUsername(""); // set username to "" initially
+		this.applicationTitle = title;
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource(logoPath));
+		this.logo = imageIcon.getImage();
 	}
 	
 	/**
-	 * log the user in
+	 * establish and return a database connection
 	 */
-	public static void login() {
-		Blackjack_2.loginStatus = true;
+	public Connection connectToDatabase(String dbms_username, String dbms_password, String db_name) {
+		Connection conn = null;
+		Properties connectionProps = new Properties();
+		connectionProps.put("user", dbms_username);
+		connectionProps.put("password", dbms_password);
+		String db_url = "jdbc:mysql://localhost:3306/" + db_name;
+		try {
+			conn = DriverManager.getConnection(db_url, connectionProps);
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return conn;
 	}
 	
 	/**
-	 * log the user out
+	 * start the application
 	 */
-	public static void logout() {
-		Blackjack_2.loginStatus = false;
+	public void startApplication() {
+		// ensure connection was successfully established
+		if (conn == null) {
+			System.err.println("Unable to establish database connection");
+			return;
+		}
+		JFrame.setDefaultLookAndFeelDecorated(true); // set the look and feel of frames
+		
+		while (true) {
+			// start application
+			this.loginFrame = this.invokeLoginFrame(this.conn);
+			
+			// monitor the users login status
+			while (true) {
+				// once the users login status is true, break the loop
+				if (Main.getLoginStatus()) {
+					break;
+				}
+				
+				// WON'T WORK WITHOUT THIS... DON'T KNOW WHY!!!
+				try {
+					Thread.sleep(0);
+				} catch(Exception e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				}
+			}
+			
+			// dispose of login frame once logged in
+			this.loginFrame.dispose();
+			
+			// start blackjack
+			this.blackjackFrame = this.invokeBlackjackFrame(this.conn);
+			int option = JOptionPane.showConfirmDialog(
+					this.blackjackFrame,
+					"Are you ready to play?",
+					"Welcome",
+					JOptionPane.YES_NO_OPTION
+				);
+			if (option == 0) { // if they user selects "Yes", start the game
+				this.blackjackFrame.getBlackjackPanel().startGame();
+			} else { // if the user selects "No", log them out
+				Main.logout();
+			}
+			
+			// monitor the users login status
+			while (true) {
+				// once the users login status is false, break the loop
+				if (!(Main.getLoginStatus())) {
+					break;
+				}
+				
+				// WON'T WORK WITHOUT THIS... DON'T KNOW WHY!!!
+				try {
+					Thread.sleep(0);
+				} catch(Exception e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				}
+			}
+			
+			this.blackjackFrame.dispose();
+		}
 	}
 	
 	/**
-	 * get users login status
+	 *  start a login frame
 	 */
-	public static boolean getLoginStatus() {
-		return Blackjack_2.loginStatus;
+	public LoginFrame invokeLoginFrame(Connection conn) {
+		LoginFrame frame = new LoginFrame(conn, this.applicationTitle, this.logo);
+		frame.setVisible(true);
+		return frame;
 	}
 	
 	/**
-	 * get the users username
+	 *  start blackjack
 	 */
-	public static String getUsername() {
-		return Blackjack_2.username;
-	}
-	
-	/**
-	 * set the users username
-	 */
-	public static void setUsername(String username) {
-		Blackjack_2.username = username;
+	public BlackjackFrame invokeBlackjackFrame(Connection conn) {
+		BlackjackFrame frame = new BlackjackFrame(conn, this.applicationTitle, this.logo, Main.getUsername());
+		frame.setVisible(true);
+		return frame;
 	}
 }
