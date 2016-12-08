@@ -2,7 +2,7 @@
  * Blackjack_2.java
  * 
  * created: 12-02-2016
- * modified: 12-03-2016
+ * modified: 12-07-2016
  * 
  * blackjack desktop application
  */
@@ -52,23 +52,9 @@ public class Blackjack_2 {
 		this.applicationTitle = title;
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(logoPath));
 		this.logo = imageIcon.getImage();
-	}
-	
-	/**
-	 * establish and return a database connection
-	 */
-	public Connection connectToDatabase(String dbms_username, String dbms_password, String db_name) {
-		Connection conn = null;
-		Properties connectionProps = new Properties();
-		connectionProps.put("user", dbms_username);
-		connectionProps.put("password", dbms_password);
-		String db_url = "jdbc:mysql://localhost:3306/" + db_name;
-		try {
-			conn = DriverManager.getConnection(db_url, connectionProps);
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return conn;
+		
+		// set the look and feel of the application
+		JFrame.setDefaultLookAndFeelDecorated(true);
 	}
 	
 	/**
@@ -80,11 +66,10 @@ public class Blackjack_2 {
 			System.err.println("Unable to establish database connection");
 			return;
 		}
-		JFrame.setDefaultLookAndFeelDecorated(true); // set the look and feel of frames
 		
 		while (true) {
 			// start application
-			this.loginFrame = this.invokeLoginFrame(this.conn);
+			this.loginFrame = this.invokeLoginFrame();
 			
 			// monitor the users login status
 			while (true) {
@@ -106,7 +91,7 @@ public class Blackjack_2 {
 			this.loginFrame.dispose();
 			
 			// start blackjack
-			this.blackjackFrame = this.invokeBlackjackFrame(this.conn);
+			this.blackjackFrame = this.invokeBlackjackFrame();
 			int option = JOptionPane.showConfirmDialog(
 					this.blackjackFrame,
 					"Are you ready to play?",
@@ -140,10 +125,27 @@ public class Blackjack_2 {
 	}
 	
 	/**
+	 * establish and return a database connection
+	 */
+	public Connection connectToDatabase(String dbms_username, String dbms_password, String db_name) {
+		Connection conn = null;
+		Properties connectionProps = new Properties();
+		connectionProps.put("user", dbms_username);
+		connectionProps.put("password", dbms_password);
+		String db_url = "jdbc:mysql://localhost:3306/" + db_name;
+		try {
+			conn = DriverManager.getConnection(db_url, connectionProps);
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		return conn;
+	}
+	
+	/**
 	 *  start a login frame
 	 */
-	public LoginFrame invokeLoginFrame(Connection conn) {
-		LoginFrame frame = new LoginFrame(conn, this.applicationTitle, this.logo);
+	public LoginFrame invokeLoginFrame() {
+		LoginFrame frame = new LoginFrame(this.conn, this.applicationTitle, this.logo);
 		frame.setVisible(true);
 		return frame;
 	}
@@ -151,8 +153,8 @@ public class Blackjack_2 {
 	/**
 	 *  start blackjack
 	 */
-	public BlackjackFrame invokeBlackjackFrame(Connection conn) {
-		BlackjackFrame frame = new BlackjackFrame(conn, this.applicationTitle, this.logo, Main.getUsername());
+	public BlackjackFrame invokeBlackjackFrame() {
+		BlackjackFrame frame = new BlackjackFrame(this.conn, this.applicationTitle, this.logo, Main.getUsername());
 		frame.setVisible(true);
 		return frame;
 	}
