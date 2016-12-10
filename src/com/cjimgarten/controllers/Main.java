@@ -2,12 +2,12 @@
  * Main.java
  * 
  * created: 10-01-2016
- * modified: 12-07-2016
+ * modified: 12-10-2016
  * 
  * launches Blackjack_2 application
  */
 
-package com.cjimgarten;
+package com.cjimgarten.controllers;
 
 public class Main {
 	

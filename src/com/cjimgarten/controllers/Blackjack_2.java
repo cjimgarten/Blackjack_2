@@ -7,7 +7,7 @@
  * blackjack desktop application
  */
 
-package com.cjimgarten;
+package com.cjimgarten.controllers;
 
 import java.awt.Image;
 import java.sql.Connection;
