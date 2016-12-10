@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 
 import com.cjimgarten.data.SessionData;
 import com.cjimgarten.game.frames.BlackjackFrame;
-import com.cjimgarten.login.frames.LoginFrame;
+import com.cjimgarten.login.views.frames.LoginFrame;
 
 public class Blackjack_2 {
 	

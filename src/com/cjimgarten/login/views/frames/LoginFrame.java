@@ -7,7 +7,7 @@
  * existing user login and new user registration frame
  */
 
-package com.cjimgarten.login.frames;
+package com.cjimgarten.login.views.frames;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -19,8 +19,8 @@ import javax.swing.border.EmptyBorder;
 
 import java.sql.Connection;
 
-import com.cjimgarten.login.panels.LoginPanel;
-import com.cjimgarten.login.panels.RegisterPanel;
+import com.cjimgarten.login.views.panels.LoginPanel;
+import com.cjimgarten.login.views.panels.RegisterPanel;
 
 public class LoginFrame extends JFrame {
 	

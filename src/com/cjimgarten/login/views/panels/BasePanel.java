@@ -2,15 +2,13 @@
  * BasePanel.java
  * 
  * created: 11-13-2016
- * modified: 11-27-2016
+ * modified: 12-10-2016
  * 
- * base class for shared functionality between LoginPanel and RegisterPanel
+ * base class for shared GUI components of LoginPanel and RegisterPanel
  */
 
-package com.cjimgarten.login.panels;
+package com.cjimgarten.login.views.panels;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 
 import javax.swing.JButton;
@@ -63,27 +61,5 @@ public class BasePanel extends JPanel {
 		// add a submit button
 		this.submitButton = new JButton("Submit");
 		this.add(this.submitButton);
-	}
-	
-	/**
-	 * returns a hashed password
-	 */
-	protected String hashPassword(String password) {
-		String hash = "";
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			byte[] passwordDigest = md.digest();
-	
-			// create a hex string of the password hash
-			StringBuffer buffer = new StringBuffer();
-			for (int i = 0; i < passwordDigest.length; i++) {
-				buffer.append(Integer.toHexString(0xff & passwordDigest[i]));
-			}
-			hash = buffer.toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return hash;
 	}
 }
