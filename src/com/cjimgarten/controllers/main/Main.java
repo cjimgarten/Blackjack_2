@@ -16,7 +16,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// path to the application logo
-		String logoPath = "../../png/jack_of_spades2.png";
+		String logoPath = "../../images/png/jack_of_spades2.png";
 		
 		// DB credentials
 		String dbms_username = ""; /* username to access MySQL */

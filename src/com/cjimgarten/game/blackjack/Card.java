@@ -2,7 +2,7 @@
  * Card.java
  * 
  * created: 11-02-2016
- * modified: 11-30-2016
+ * modified: 12-10-2016
  * 
  * class represents a playing card
  */
@@ -32,7 +32,7 @@ public class Card {
 		this.value = value;
 		this.visible = visible;
 		ImageIcon upImageIcon = new ImageIcon(getClass().getResource(imagePath));
-		ImageIcon downImageIcon = new ImageIcon(getClass().getResource("../../png/card_back_black.png"));
+		ImageIcon downImageIcon = new ImageIcon(getClass().getResource("../../images/png/card_back_black.png"));
 		upImageIcon = this.resizeImageIcon(upImageIcon, imageWidth, imageHeight); // resize upImageIcon
 		downImageIcon = this.resizeImageIcon(downImageIcon, imageWidth, imageHeight); // resize downImageIcon
 		this.upImageLabel = new JLabel(upImageIcon);

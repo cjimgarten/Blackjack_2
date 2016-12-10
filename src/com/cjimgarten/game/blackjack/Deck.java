@@ -2,7 +2,7 @@
  * Deck.java
  * 
  * created: 11-02-2016
- * modified: 12-01-2016
+ * modified: 12-10-2016
  * 
  * class represents a deck of cards
  */
@@ -46,7 +46,7 @@ public class Deck extends ArrayList<Card> {
 				value--;
 			}
 			for (int j = 0; j < s; j++) {
-				String imagePath = "../../png/" + ranks[i].toLowerCase() + "_of_" + suits[j].toLowerCase() + "s.png";
+				String imagePath = "../../images/png/" + ranks[i].toLowerCase() + "_of_" + suits[j].toLowerCase() + "s.png";
 				Card c = new Card(ranks[i], suits[j], value, false, imagePath, this.cardWidth, this.cardHeight);
 				this.add(c);
 			}
