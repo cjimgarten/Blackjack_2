@@ -2,7 +2,7 @@
  * LoginPanel.java
  * 
  * created: 11-08-2016
- * modified: 12-03-2016
+ * modified: 12-08-2016
  * 
  * panel for user to login to an existing account
  */
@@ -19,7 +19,7 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
-import com.cjimgarten.Main;
+import com.cjimgarten.data.SessionData;
 
 public class LoginPanel extends BasePanel implements ActionListener {
 		
@@ -71,8 +71,7 @@ public class LoginPanel extends BasePanel implements ActionListener {
 		// attempt to log the user in
 		try {
 			if (this.validateUser(username, password)) { // successful login attempt
-				Main.login(); // log the user in
-				Main.setUsername(username); // store their username
+				SessionData.login(username); // log the user in
 			} else { // unsuccessful login attempt
 				JOptionPane.showMessageDialog(this, "Incorrect credentials");
 			}

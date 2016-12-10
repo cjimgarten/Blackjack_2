@@ -11,10 +11,6 @@ package com.cjimgarten;
 
 public class Main {
 	
-	// users' login status
-	private static boolean loginStatus;
-	private static String username;
-	
 	/**
 	 * launch the application
 	 */
@@ -35,40 +31,5 @@ public class Main {
 				db_name
 			);
 		app.startApplication();
-	}
-	
-	/**
-	 * log the user in
-	 */
-	public static void login() {
-		Main.loginStatus = true;
-	}
-	
-	/**
-	 * log the user out
-	 */
-	public static void logout() {
-		Main.loginStatus = false;
-	}
-	
-	/**
-	 * get users login status
-	 */
-	public static boolean getLoginStatus() {
-		return Main.loginStatus;
-	}
-	
-	/**
-	 * get the users username
-	 */
-	public static String getUsername() {
-		return Main.username;
-	}
-	
-	/**
-	 * set the users username
-	 */
-	public static void setUsername(String username) {
-		Main.username = username;
 	}
 }

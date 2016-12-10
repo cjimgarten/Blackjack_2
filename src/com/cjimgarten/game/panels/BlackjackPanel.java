@@ -2,7 +2,7 @@
  * BlackjackPanel.java
  * 
  * created: 11-08-2016
- * modified: 12-03-2016
+ * modified: 12-08-2016
  * 
  * panel for blackjack
  */
@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import com.cjimgarten.Main;
+import com.cjimgarten.data.SessionData;
 import com.cjimgarten.game.blackjack.Blackjack;
 import com.cjimgarten.game.blackjack.Card;
 import com.cjimgarten.game.blackjack.Player;
@@ -408,7 +408,7 @@ public class BlackjackPanel extends JPanel implements ActionListener {
 			}
 			bet = Double.parseDouble(betStr);
 		} catch (Exception e) { // if the user hits 'Cancel', log them out
-			Main.logout();
+			SessionData.logout();
 		}
 		return bet;
 	}

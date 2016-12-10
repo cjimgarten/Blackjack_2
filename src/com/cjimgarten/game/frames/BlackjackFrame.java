@@ -2,7 +2,7 @@
  * BlackjackFrame.java
  * 
  * created: 10-30-2016
- * modified: 12-03-2016
+ * modified: 12-10-2016
  * 
  * frame for blackjack
  */
@@ -32,7 +32,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.cjimgarten.Main;
+import com.cjimgarten.data.SessionData;
 import com.cjimgarten.game.panels.BlackjackPanel;
 import com.cjimgarten.game.panels.TransactionsPanel;
 import com.cjimgarten.game.panels.OutcomesPanel;
@@ -80,51 +80,6 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
-		this.configureFrame();
-	}
-	
-	public BlackjackFrame(Connection conn, String title, String username) {
-		super(title + " (" + username + ")");
-		this.conn = conn;
-		this.username = username;
-		try {
-			String query = "SELECT id, balance FROM users WHERE username = '" + this.username + "'";
-			ResultSet userData = this.getData(query);
-			while (userData.next()) {
-				this.id = userData.getString("id");
-				this.balance = userData.getString("balance");
-			}
-		} catch (SQLException e){
-			e.printStackTrace();
-		}
-		this.configureFrame();
-	}
-	
-	public BlackjackFrame(Connection conn, String username) {
-		super("Blackjack (" + username + ")");
-		this.conn = conn;
-		this.username = username;
-		try {
-			String query = "SELECT id, balance FROM users WHERE username = '" + this.username + "'";
-			ResultSet userData = this.getData(query);
-			while (userData.next()) {
-				this.id = userData.getString("id");
-				this.balance = userData.getString("balance");
-			}
-		} catch (SQLException e){
-			e.printStackTrace();
-		}
-		this.configureFrame();
-	}
-	
-	public BlackjackFrame(Connection conn) {
-		super("Blackjack");
-		this.conn = conn;
-		this.configureFrame();
-	}
-	
-	public BlackjackFrame() {
-		super("Blackjack");
 		this.configureFrame();
 	}
 	
@@ -211,7 +166,7 @@ public class BlackjackFrame extends JFrame implements ActionListener {
 			this.exportOutcomes();
 			JOptionPane.showMessageDialog(this, "Exported successfully");
 		} else { // change the users' login status
-			Main.logout();
+			SessionData.logout();
 		}
 	}
 	

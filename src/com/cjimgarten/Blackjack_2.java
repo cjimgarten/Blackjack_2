@@ -2,7 +2,7 @@
  * Blackjack_2.java
  * 
  * created: 12-02-2016
- * modified: 12-07-2016
+ * modified: 12-10-2016
  * 
  * blackjack desktop application
  */
@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.cjimgarten.data.SessionData;
 import com.cjimgarten.game.frames.BlackjackFrame;
 import com.cjimgarten.login.frames.LoginFrame;
 
@@ -47,11 +48,12 @@ public class Blackjack_2 {
 				db_password,
 				db_name
 			);
-		Main.logout(); // set loginStatus to false initially
-		Main.setUsername(""); // set username to "" initially
+		this.loginFrame = null;
+		this.blackjackFrame = null;
 		this.applicationTitle = title;
 		ImageIcon imageIcon = new ImageIcon(getClass().getResource(logoPath));
 		this.logo = imageIcon.getImage();
+		SessionData.logout(); // keep the user logged out initially
 		
 		// set the look and feel of the application
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -69,12 +71,13 @@ public class Blackjack_2 {
 		
 		while (true) {
 			// start application
+			SessionData.printData(); // DEBUGGER
 			this.loginFrame = this.invokeLoginFrame();
 			
 			// monitor the users login status
 			while (true) {
 				// once the users login status is true, break the loop
-				if (Main.getLoginStatus()) {
+				if (SessionData.isLoggedIn()) {
 					break;
 				}
 				
@@ -89,6 +92,7 @@ public class Blackjack_2 {
 			
 			// dispose of login frame once logged in
 			this.loginFrame.dispose();
+			SessionData.printData(); // DEBUGGER
 			
 			// start blackjack
 			this.blackjackFrame = this.invokeBlackjackFrame();
@@ -101,13 +105,13 @@ public class Blackjack_2 {
 			if (option == 0) { // if they user selects "Yes", start the game
 				this.blackjackFrame.getBlackjackPanel().startGame();
 			} else { // if the user selects "No", log them out
-				Main.logout();
+				SessionData.logout();
 			}
 			
 			// monitor the users login status
 			while (true) {
 				// once the users login status is false, break the loop
-				if (!(Main.getLoginStatus())) {
+				if (!(SessionData.isLoggedIn())) {
 					break;
 				}
 				
@@ -120,6 +124,7 @@ public class Blackjack_2 {
 				}
 			}
 			
+			// dispose of blackjack frame once logged out
 			this.blackjackFrame.dispose();
 		}
 	}
@@ -154,7 +159,7 @@ public class Blackjack_2 {
 	 *  start blackjack
 	 */
 	public BlackjackFrame invokeBlackjackFrame() {
-		BlackjackFrame frame = new BlackjackFrame(this.conn, this.applicationTitle, this.logo, Main.getUsername());
+		BlackjackFrame frame = new BlackjackFrame(this.conn, this.applicationTitle, this.logo, SessionData.getUsername());
 		frame.setVisible(true);
 		return frame;
 	}
