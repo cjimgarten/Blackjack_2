@@ -7,7 +7,7 @@
  * blackjack desktop application
  */
 
-package com.cjimgarten.controllers;
+package com.cjimgarten.controllers.main;
 
 import java.awt.Image;
 import java.sql.Connection;
@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 
 import com.cjimgarten.data.SessionData;
 import com.cjimgarten.game.frames.BlackjackFrame;
-import com.cjimgarten.login.views.frames.LoginFrame;
+import com.cjimgarten.views.login.frames.LoginFrame;
 
 public class Blackjack_2 {
 	

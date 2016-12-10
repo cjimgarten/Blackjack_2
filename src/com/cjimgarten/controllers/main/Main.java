@@ -7,7 +7,7 @@
  * launches Blackjack_2 application
  */
 
-package com.cjimgarten.controllers;
+package com.cjimgarten.controllers.main;
 
 public class Main {
 	
@@ -16,7 +16,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// path to the application logo
-		String logoPath = "png/jack_of_spades2.png";
+		String logoPath = "../../png/jack_of_spades2.png";
 		
 		// DB credentials
 		String dbms_username = ""; /* username to access MySQL */

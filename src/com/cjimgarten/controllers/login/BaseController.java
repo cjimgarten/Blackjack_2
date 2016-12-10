@@ -7,7 +7,7 @@
  * base class for shared functionality of LoginController and RegisterController
  */
 
-package com.cjimgarten.login.controllers;
+package com.cjimgarten.controllers.login;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

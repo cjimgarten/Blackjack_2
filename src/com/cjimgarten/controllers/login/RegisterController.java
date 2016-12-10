@@ -7,7 +7,7 @@
  * controls registration events
  */
 
-package com.cjimgarten.login.controllers;
+package com.cjimgarten.controllers.login;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
