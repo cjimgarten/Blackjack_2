@@ -1,5 +1,5 @@
-# Blackjack_2
-Description: Blackjack desktop application coded in Java
+# desktop-blackjack
+blackjack desktop application
 
 Log into an existing account:
 ![Alt text](./src/com/cjimgarten/images/screenshots/login.png?raw=true "Login")
