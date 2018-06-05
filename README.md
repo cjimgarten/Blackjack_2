@@ -1,5 +1,5 @@
 # desktop-blackjack
-blackjack desktop application
+Blackjack desktop application
 
 Log into an existing account:
 ![Alt text](./src/com/cjimgarten/images/screenshots/login.png?raw=true "Login")
